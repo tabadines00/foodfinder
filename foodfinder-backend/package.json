@@ -1,0 +1,16 @@
+{
+  "name": "foodfinder-backend",
+  "version": "1.0.0",
+  "description": "foodfinder node.js backend for handling api and database requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm jest "
+  },
+  "keywords": [
+    "Express",
+    "REST",
+    "API"
+  ],
+  "author": "Cody Cusimano, Thomas Abadines",
+  "license": "MIT"
+}
