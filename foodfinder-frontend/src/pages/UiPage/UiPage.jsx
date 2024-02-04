@@ -12,7 +12,7 @@ const UiPage = () => {
  return(
     <Container maxWidth={"sm"} alignItems="center" disableGutter={"true"} sx={{padding: "0 5px 0 5px"}}>
         <Navbar />
-        <SwipeCard />
+        <SwipeCard data={data}/>
         <BottomBar />
     </Container>
  )
