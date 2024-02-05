@@ -14,6 +14,7 @@
   "author": "Cody Cusimano, Thomas Abadines",
   "license": "MIT",
   "dependencies": {
+    "api": "^6.1.1",
     "axios": "^1.6.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
