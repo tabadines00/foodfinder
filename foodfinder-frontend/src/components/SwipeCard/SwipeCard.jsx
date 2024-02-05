@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; 
 import TinderCard from 'react-tinder-card'
 import Box from '@mui/material/Box'; 
 import { Typography } from '@mui/material';
 
+import axios from 'axios'; 
 
-
-const SwipeCard = ({data}) => {
-    console.log(data)
+const SwipeCard = () => {
     const onSwipe = (direction) => {
         console.log('you swiped: ' + direction)
     }
@@ -14,30 +13,74 @@ const SwipeCard = ({data}) => {
     const onCardLeftScreen = (myIdentifier) => {
         console.log(myIdentifier + 'left the screen')
     }
-   
-   return (
-    <Box height="80%" width="100%" borderRadius="11"> 
-    {
-  data.map((group) => ( // Iterate over each group in the data array
-    group.businesses.map((business) => ( // Iterate over each business in the businesses array
-    <TinderCard key={business.id} onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('Gone')} style={{borderRadius:"11"}}>
-      <div > // Use business.id as the key for each item
-        <h2>{business.name}</h2>
-        <img src={business.image_url} alt={business.name} />
-        <p>{business.display_phone}</p>
-        <p>{business.location.address1} {business.location.city}</p>
-        <p>{business.categories.map(category => category.title).join(', ')}</p>
-        <p>{business.distance.toFixed(2)} meters away</p>
-        {/* ... add any other details you want from the business object */}
-      </div>
-     </TinderCard>
-    ))
-  ))
-}
 
-  
-    </Box>
-            )
+    const [data, setData] = useState([]); // Initialize state for the fetched data
+    const [coords, setCoords] = useState([null, null])
+
+    useEffect(() => {
+        // Check for geolocation support and request user's location
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log('Latitude:', latitude);
+                    console.log('Longitude:', longitude);
+                    setCoords([latitude, longitude])
+                    // Call fetchData with the obtained coordinates
+                    //fetchData(longitude, latitude);
+                },
+                (error) => {
+                console.error('Error getting user location:', error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported in this browser.');
+        }
+    }, []);
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                );
+                setData(response.data); // Update the component's state with the fetched data
+                console.log("success");
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        if(coords) {
+            fetchData()
+        }
+    }, [coords]);
+
+    if(data) {
+        return (
+            <Box height="80%" width="100%" borderRadius="11"> 
+                {
+                data.map((business) => ( // Iterate over each business in the businesses array
+                    <TinderCard key={business.id} onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('Gone')} style={{borderRadius:"11"}}>
+                        <div>
+                            <h2>{business.name}</h2>
+                            <img src={business.image_url} alt={business.name} />
+                            {/*<p>{business.display_phone}</p>*/}
+                            {/*<p>{business.location.address1} {business.location.city}</p>*/}
+                            <p>{business.categories.join(', ')}</p>
+                            {/*<p>{business.distance.toFixed(2)} meters away</p>*/}
+                            {/* ... add any other details you want from the business object */}
+                        </div>
+                    </TinderCard>
+                ))
+                }
+            </Box>
+        )
+    } else {
+        return null;
+    }
 }
 
 

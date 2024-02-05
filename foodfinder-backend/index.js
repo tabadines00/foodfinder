@@ -23,10 +23,11 @@ app.get('/api/yelpdata', async (req, res) => {
     })
     .then(({ data }) => {
       // Create a new object to send to the frontend
-      const simplifiedList = data.businesses.map(({ id, name, categories, rating, price }) => (
+      const simplifiedList = data.businesses.map(({ id, name, image_url, categories, rating, price }) => (
         { 
           id,
           name,
+          image_url,
           categories: categories.map(category => category.title),
           rating,
           price
