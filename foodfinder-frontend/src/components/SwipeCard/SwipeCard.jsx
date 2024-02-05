@@ -5,8 +5,8 @@ import { Typography } from '@mui/material';
 
 
 
-const SwipeCard = (props) => {
-    console.log(props)
+const SwipeCard = (data) => {
+    console.log(data)
     const onSwipe = (direction) => {
         console.log('you swiped: ' + direction)
     }
@@ -18,7 +18,7 @@ const SwipeCard = (props) => {
    return (
     <Box height="80%" width="100%" borderRadius="11"> 
     
-  {item.businesses.map((business) => (
+  {data.businesses.map((business) => (
         <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('Gone')} style={{borderRadius:"11"}}>
             <div style={{backgroundImage: `url(${business.image_url})`, 
                          backgroundRepeat: "no-repeat", 
