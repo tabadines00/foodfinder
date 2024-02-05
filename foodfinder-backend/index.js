@@ -12,18 +12,23 @@ app.use(cors()); // Enable CORS for your frontend
 app.get('/api/yelpdata', async (req, res) => {
   try {
     const { latitude, longitude } = req.query;
-    
+
     sdk.auth(process.env.YELP_API_KEY);
     sdk.v3_business_search({
       latitude: latitude,
       longitude: longitude,
+      open_now: 'true',
       sort_by: 'distance',
       limit: '20'
     })
     .then(({ data }) => {
-      console.log(data)
-       // Send the Yelp API response to your frontend
-      res.json(data);
+      const simplifiedList = data.businesses.map(({ name, categories }) => (
+        { name,
+          categories: categories.map(category => category.title) }
+      ));
+      console.log(JSON.stringify(simplifiedList))
+      // Send the Yelp API response to your frontend
+      res.json(simplifiedList);
       console.log("success")
     })
     .catch(err => console.error(err));
