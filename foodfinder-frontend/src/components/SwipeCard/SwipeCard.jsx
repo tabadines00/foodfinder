@@ -17,8 +17,8 @@ const SwipeCard = (props) => {
    
    return (
     <Box height="80%" width="100%" borderRadius="11"> 
-     {props.data.map((item) =>
-  item.businesses.map((business) => (
+    
+  {item.businesses.map((business) => (
         <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('Gone')} style={{borderRadius:"11"}}>
             <div style={{backgroundImage: `url(${business.image_url})`, 
                          backgroundRepeat: "no-repeat", 
@@ -46,7 +46,7 @@ const SwipeCard = (props) => {
             </div>
         </TinderCard>
         ))
-        )}
+        }
     </Box>
             )
 }
