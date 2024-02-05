@@ -66,7 +66,7 @@ function Simple () {
       <div className='cardContainer'>
         {data?.map((business) =>
           <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name)} onCardLeftScreen={() => outOfFrame(business.name)}>
-            <div style={{ backgroundImage: business.image_url}} className='card'>
+            <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
                 <h3>{business.name}</h3>
                 {/*<p>{business.display_phone}</p>*/}
                 {/*<p>{business.location.address1} {business.location.city}</p>*/}
