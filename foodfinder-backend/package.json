@@ -4,7 +4,8 @@
   "description": "foodfinder node.js backend for handling api and database requests",
   "main": "index.js",
   "scripts": {
-    "test": "npm jest "
+    "test": "npm jest ",
+    "dev": "node index.js --env-file .env"
   },
   "keywords": [
     "Express",
