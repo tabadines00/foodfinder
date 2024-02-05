@@ -12,7 +12,7 @@ app.use(cors()); // Enable CORS for your frontend
 app.get('/api/yelpdata', async (req, res) => {
   try {
     const { latitude, longitude } = req.query;
-
+    
     sdk.auth(process.env.YELP_API_KEY);
     sdk.v3_business_search({
       latitude: latitude,
