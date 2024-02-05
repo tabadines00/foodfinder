@@ -1,32 +1,53 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TinderCard from 'react-tinder-card'
-
-const db = [
-  {
-    name: 'Richard Hendricks',
-    url: './img/richard.jpg'
-  },
-  {
-    name: 'Erlich Bachman',
-    url: './img/erlich.jpg'
-  },
-  {
-    name: 'Monica Hall',
-    url: './img/monica.jpg'
-  },
-  {
-    name: 'Jared Dunn',
-    url: './img/jared.jpg'
-  },
-  {
-    name: 'Dinesh Chugtai',
-    url: './img/dinesh.jpg'
-  }
-]
+import axios from 'axios'
 
 function Simple () {
-  const characters = db
-  const [lastDirection, setLastDirection] = useState()
+    const [lastDirection, setLastDirection] = useState()
+    const [data, setData] = useState([]); // Initialize state for the fetched data
+    const [coords, setCoords] = useState([null, null])
+
+    useEffect(() => {
+        // Check for geolocation support and request user's location
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log('Latitude:', latitude);
+                    console.log('Longitude:', longitude);
+                    setCoords([latitude, longitude])
+                    // Call fetchData with the obtained coordinates
+                    //fetchData(longitude, latitude);
+                },
+                (error) => {
+                console.error('Error getting user location:', error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported in this browser.');
+        }
+    }, []);
+
+    useEffect(() => {
+        // Fetch data when the component mounts
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                );
+                setData(response.data); // Update the component's state with the fetched data
+                console.log("success");
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        if(coords[0]) {
+            fetchData()
+        }
+    }, [coords]);
+
 
   const swiped = (direction, nameToDelete) => {
     console.log('removing: ' + nameToDelete)
@@ -43,10 +64,15 @@ function Simple () {
       <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
       <h1>React Tinder Card</h1>
       <div className='cardContainer'>
-        {characters.map((character) =>
-          <TinderCard className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-            <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
-              <h3>{character.name}</h3>
+        {data?.map((business) =>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name)} onCardLeftScreen={() => outOfFrame(business.name)}>
+            <div style={{ backgroundImage: business.image_url}} className='card'>
+                <h3>{business.name}</h3>
+                {/*<p>{business.display_phone}</p>*/}
+                {/*<p>{business.location.address1} {business.location.city}</p>*/}
+                <p>{business.categories.join(', ')}</p>
+                {/*<p>{business.distance.toFixed(2)} meters away</p>*/}
+                {/* ... add any other details you want from the business object */}
             </div>
           </TinderCard>
         )}
