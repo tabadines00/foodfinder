@@ -3,7 +3,8 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Define your preferred port
+const PORT = process.env.PORT || 3000; // Define your preferred port
+
 
 app.use(cors()); // Enable CORS for your frontend
 
@@ -25,13 +26,14 @@ app.get('/api/yelpdata', async (req, res) => {
           limit: 50,
         },
         headers: {
-          Authorization: 'YELP_API_KEY',
+          Authorization: process.env.YELP_API_KEY,
         },
       }
     );
 
     // Send the Yelp API response to your frontend
     res.json(response.data);
+    console.log("success")
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ error: 'Internal Server Error' });

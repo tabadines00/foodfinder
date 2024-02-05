@@ -1,8 +1,9 @@
-import React from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import axios from 'axios'; 
-import { Container } from '@mui/material/Container'; 
+import Container from '@mui/material/Container'; 
 import Box from '@mui/material/Box'; 
 import Navbar from '../../components/Navbar/Navbar';
+import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
 import BottomBar from '../../components/BottomBar/BottomBar';
 
  
@@ -16,9 +17,11 @@ const UiPage = () => {
       const fetchData = async (longitude, latitude) => {
         try {
           const response = await axios.get(
-            `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=restaurants&radius=8045&categories=french&categories=bars&sort_by=distance&limit=50`
+            `https://api.yelp.com/v3/businesses/search?latitude=60}&longitude=70&term=restaurants&radius=8045&categories=french&categories=bars&sort_by=distance&limit=50`
+            //`https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&term=restaurants&radius=8045&categories=french&categories=bars&sort_by=distance&limit=50`
           );
           setData(response.data); // Update the component's state with the fetched data
+          console.log("success")
         } catch (error) {
           console.error('Error fetching data:', error);
         }
