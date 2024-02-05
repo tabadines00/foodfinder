@@ -17,7 +17,7 @@ const UiPage = () => {
       const fetchData = async (longitude, latitude) => {
         try {
           const response = await axios.get(
-            `http:localhost:3000/api/yelpdata?latitude=${latitude}&longitude=${longitude}`
+            `http://localhost:3000/api/yelpdata?latitude=${latitude}&longitude=${longitude}`
           );
           setData(response.data); // Update the component's state with the fetched data
           console.log("success")
