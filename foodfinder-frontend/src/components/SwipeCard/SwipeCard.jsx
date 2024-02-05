@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 
 
 
-const SwipeCard = (data) => {
+const SwipeCard = ({data}) => {
     console.log(data)
     const onSwipe = (direction) => {
         console.log('you swiped: ' + direction)
