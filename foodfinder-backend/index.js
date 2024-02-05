@@ -22,11 +22,18 @@ app.get('/api/yelpdata', async (req, res) => {
       limit: '20'
     })
     .then(({ data }) => {
-      const simplifiedList = data.businesses.map(({ name, categories }) => (
-        { name,
-          categories: categories.map(category => category.title) }
+      // Create a new object to send to the frontend
+      const simplifiedList = data.businesses.map(({ id, name, categories, rating, price }) => (
+        { 
+          id,
+          name,
+          categories: categories.map(category => category.title),
+          rating,
+          price
+        }
       ));
       console.log(JSON.stringify(simplifiedList))
+      
       // Send the Yelp API response to your frontend
       res.json(simplifiedList);
       console.log("success")
