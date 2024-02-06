@@ -9,19 +9,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 
 const Navbar = () => {
+    //boxShadow: "none"
     return (
-        <Box bgcolor={"EEEEEE"} sx={{flexGrow: 1,}}>
-            <AppBar position='static' >
+        <div  style={{flexGrow: 1, width: "100%", height: "7%", maxWidth: "360px",}}>
+            <AppBar position='static' sx={{backgroundColor: "#EEEEEE", borderRadius: "11px 11px 0 0", width: "100%", height: "100%", boxShadow: "none"}}>
                 <Toolbar>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1, fontFamily:'Philosopher, sans-serif', color:"FB0000"}}>
+                    <Typography variant="h6" align={"left"} component="div" sx={{flexGrow: 1, fontFamily:'Philosopher, sans-serif', color:"#FB0000"}}>
                         FoodFinder
                     </Typography>
-                    <IconButton size="large" edge="start" color="605656" aria-label="menu" sx={{mr: 2}}>
+                    <IconButton size="large" edge="end" align={"right"} color="#605656" aria-label="menu" sx={{mr: 2}}>
                         <MenuIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
-        </Box>
+        </div>
     )
 }
 

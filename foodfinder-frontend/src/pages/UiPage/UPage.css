@@ -1,0 +1,12 @@
+.ui-page-parent{
+    background-color: #EEEEEE;
+    max-width: 360px;
+    border-radius: 11px;
+    padding: 0 !important;  
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0; 
+    
+}

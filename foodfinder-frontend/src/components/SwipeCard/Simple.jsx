@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import TinderCard from 'react-tinder-card'
 import axios from 'axios'
+import './SwipeCard.css'; 
+
 
 function Simple () {
     const [lastDirection, setLastDirection] = useState()
@@ -59,15 +61,11 @@ function Simple () {
   }
 
   return (
-    <div>
-      <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
-      <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
-      <h1>React Tinder Card</h1>
       <div className='cardContainer'>
         {data?.map((business) =>
-          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name)} onCardLeftScreen={() => outOfFrame(business.name)}>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name)} onCardLeftScreen={() => outOfFrame(business.name)} style={{maxWidth: "100%"}}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
-                <h3>{business.name}</h3>
+            <h3>{business.name}</h3>
                 {/*<p>{business.display_phone}</p>*/}
                 {/*<p>{business.location.address1} {business.location.city}</p>*/}
                 <p>{business.categories.join(', ')}</p>
@@ -77,9 +75,18 @@ function Simple () {
           </TinderCard>
         )}
       </div>
-      {lastDirection ? <h2 className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText' />}
-    </div>
+
+   
   )
 }
 
 export default Simple
+
+
+/*
+    <div style={{height: "100%"}}>
+      <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
+      <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
+       </div>
+
+*/

@@ -6,13 +6,14 @@ import Navbar from '../../components/Navbar/Navbar';
 import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
 import BottomBar from '../../components/BottomBar/BottomBar';
 import Simple from '../../components/SwipeCard/Simple';
+import './UPage.css'
 
  
 
 const UiPage = () => {
 
  return(
-    <Container maxWidth={"sm"} alignItems="center" disableGutter={"true"} sx={{padding: "0 5px 0 5px"}}>
+    <Container maxWidth={"360px"} height={"100vh"} alignItems="center"  className="ui-page-parent" >
         <Navbar />
         <Simple />
         <BottomBar />
