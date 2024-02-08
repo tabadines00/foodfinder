@@ -1,0 +1,9 @@
+To Install from 'requirements.txt':
+# Make sure the python version in your environment matches the Lambda!
+pip install -r requirements.txt
+
+To Minimize the package:
+rm -rf *.dist-info
+find . -name "tests" -type d | xargs -I{} rm -rf {}
+find . -name "docs" -type d | xargs -I{} rm -rf {}
+find . -name "__pycache__" -type d | xargs -I{} rm -rf {}
