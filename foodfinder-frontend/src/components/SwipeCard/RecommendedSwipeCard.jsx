@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import TinderCard from 'react-tinder-card'
-import SwipeCardDesc from './SwipeCardDesc/SwipeCardDesc'
-import InfoIcon from '@mui/icons-material/Info';
-import IconButton from '@mui/material/IconButton';
 import axios from 'axios'
 import './SwipeCard.css'; 
 
@@ -12,7 +9,6 @@ function Simple () {
     const [data, setData] = useState([]); // Initialize state for the fetched data
     const [coords, setCoords] = useState([null, null])
     const [yesChoice, setYesChoice] = useState([])
-    const [render, setRender] = useState(false); 
 
     useEffect(() => {
         // Check for geolocation support and request user's location
@@ -89,21 +85,15 @@ function Simple () {
       })
   }
 
-  const toggleRender = () => {
-    setRender(prevState => !prevState);
-  }; 
-
   return (
       <div className='cardContainer'>
         {data?.map((business) =>
-          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} style={{maxWidth: "100%",}}>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} style={{maxWidth: "100%"}}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
-              <IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white"}}><InfoIcon /></IconButton>
-              {render && <SwipeCardDesc Data={business}/>}
-            <h3 style={{color: "white", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
+            <h3>{business.name}</h3>
                 {/*<p>{business.display_phone}</p>*/}
                 {/*<p>{business.location.address1} {business.location.city}</p>*/}
-                <p style={{position: "absolute", fontSize: "12px", margin: "10px", bottom:  !render ? '8%' : '18%' }}>{business.categories.join(', ')}</p>
+                <p>{business.categories.join(', ')}</p>
                 {/*<p>{business.distance.toFixed(2)} meters away</p>*/}
                 {/* ... add any other details you want from the business object */}
             </div>
@@ -116,12 +106,3 @@ function Simple () {
 }
 
 export default Simple;  
-
-
-
-/*
-    <div style={{height: "100%"}}>
-      <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
-      <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
-       </div>            
-       */  

@@ -1,4 +1,5 @@
 const express = require('express');
+const { spawn } = require('child_process');
 const axios = require('axios');
 const cors = require('cors');
 const sdk = require('api')('@yelp-developers/v1.0#8e0h2zlqcimwm0');
@@ -45,6 +46,24 @@ app.get('/api/yelpdata', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.get('/recommendations', (req, res) => {
+  const pythonProcess = spawn('python', ['cluster2.py'])
+
+  pythonProcess.stdout.on('data', (data) => {
+    res.send(data.toString())
+  })
+  pythonProcess.stderr.on('data', (data) => {
+    res.status(500).send(data.toString())
+  })
+
+})
+
+
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -46,6 +46,7 @@
     border-radius: 20px;
     background-size: cover;
     background-position: center;
+    
   }
 
   .card::before {
@@ -67,7 +68,7 @@
   .swipe:last-of-type {
   
   }
-  
+  /*
   .card > h3 {
     position: absolute;
     bottom: 10%;
@@ -82,6 +83,8 @@
     font-size: 12px;
     margin: 10px; 
   }
+
+  */
   
   .infoText {
     width: 100%;

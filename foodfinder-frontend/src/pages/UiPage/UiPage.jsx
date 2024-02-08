@@ -12,9 +12,10 @@ import './UPage.css'
 
 const UiPage = () => {
 
+
  return(
-    <Container maxWidth={"360px"} height={"100vh"} alignItems="center"  className="ui-page-parent" >
-        <Navbar />
+    <Container maxWidth={"360px"} height={"100vh"} alignItems="center"  className="ui-page-parent" sx={{overflow: "hidden"}} >
+        <Navbar/>
         <Simple />
         <BottomBar />
     </Container>
