@@ -14,6 +14,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'; // Icon for the Account item
 import MenuBookIcon from '@mui/icons-material/MenuBook'; // Icon for the Menu item
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import PreferenceDistance from './PreferenceDistance/PreferenceDistance'
 
 
 
@@ -36,16 +38,39 @@ const Navbar = () => {
         switch (activeContent) {
             case 'account':
                 return { width: '100%', content: 
-                <> 
-                 <IconButton onClick={goBack}><CloseIcon /></IconButton>
-                <Typography variant="h4">Account Details</Typography>
-                </> };
+                <div style={{display: "flex", flexDirection: "column", height: "100vh"}}> 
+                <div style={{display: "flex", 
+                             flexDirection: "row", 
+                             color: "#605656", 
+                             backgroundColor: "white", 
+                             justifyContent: "center", 
+                             alignItems: "center", 
+                             borderRadius: "11px 11px 0 0"}}>
+                 <IconButton onClick={goBack} sx={{position: "absolute", left: 0 }}><ArrowBackIosIcon fontSize="small" sx={{color: "#605656"}} /></IconButton>
+                <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Account Details</Typography>
+                </div>
+                <div style={{flexGrow: 1, backgroundColor: "#ececec"}}>
+                 rrrrr2
+                </div>
+                </div> };
             case 'Preferences':
                 return { width: '100%', content: 
-                <> 
-                <IconButton onClick={goBack}><CloseIcon /></IconButton>
-                <Typography variant="h4">Preferences</Typography> 
-                </> };
+                <div style={{display: "flex", flexDirection: "column", height: "100vh"}}> 
+                    <div style={{display: "flex", 
+                                 flexDirection: "row", 
+                                 color: "#605656", 
+                                 backgroundColor: "white", 
+                                 justifyContent: "center", 
+                                 alignItems: "center", 
+                                 borderRadius: "11px 11px 0 0"}}> 
+                <IconButton onClick={goBack} sx={{position: "absolute", left: 0 }}><ArrowBackIosIcon fontSize="small" sx={{color: "#605656"}} /></IconButton>
+                    
+                <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Preferences</Typography> 
+                </div>
+                <div style={{flexGrow: 1, backgroundColor: "#ececec",}}>
+                    <PreferenceDistance />
+                </div>
+                </div> };
             default:
                 return { width: '250px', content: (
                     <List>
