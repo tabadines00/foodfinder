@@ -38,15 +38,3 @@ const PreferenceDistance = () => {
 
 
 export default PreferenceDistance; 
-
-/*
-<Slider size="small"
- defaultValue={20}
-aria-label="Small"
-valueLabelDisplay="auto"
-max={50}
-*/
-
-/*
-!render ? '11%' : '21%'
-*/
