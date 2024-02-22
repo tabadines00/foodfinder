@@ -1,3 +1,5 @@
+
+
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
@@ -84,6 +86,13 @@ def get_recommendations(df, target_restaurant_idx, num_recommendations=5):
 # Filter restaurants in the same cluster
 recommended_restaurants = df[df['cluster'] == target_cluster]
 
+
+
+
+
+
+
+
 #!!!
 """
 # Example usage:
@@ -94,3 +103,4 @@ print(recommended_restaurants)
 
 """ 
 #!!!
+

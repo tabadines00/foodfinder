@@ -3,23 +3,31 @@ import axios from 'axios';
 import Container from '@mui/material/Container'; 
 import Box from '@mui/material/Box'; 
 import Navbar from '../../components/Navbar/Navbar';
-import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
+//import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
 import BottomBar from '../../components/BottomBar/BottomBar';
 import Simple from '../../components/SwipeCard/Simple';
+import { MyProvider } from '../../Context'; 
+import './UPage.css'
 
  
 
 const UiPage = () => {
 
+
  return(
-    <Container maxWidth={"sm"} alignItems="center" disableGutter={"true"} sx={{padding: "0 5px 0 5px"}}>
-        <Navbar />
+    <MyProvider> 
+     <div style={{ maxWidth: "450px", width: '100%', height: "100vh",  overflow: "hidden", }} className="ui-page-parent"> 
+        <Navbar/>
         <Simple />
         <BottomBar />
-    </Container>
+      </div>
+    </MyProvider>
  )
 }
 
 
 
 export default UiPage; 
+
+
+/*     <Container maxWidth={"450px"} height={"100vh"} alignItems="center"  className="ui-page-parent" sx={{overflow: "hidden", }} >*/

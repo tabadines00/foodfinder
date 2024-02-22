@@ -10,12 +10,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const BottomBar = () => {
     return (
-        <Box bgcolor={"EEEEEE"} sx={{flexGrow: 1}}>
-            <AppBar position='static'>
+        <div style={{flexGrow: 1, width: "100%", height: "10%", maxWidth: "360px"}}>
+            <AppBar position='static' sx={{backgroundColor: "#EEEEEE", borderRadius: "0 0 11px 11px", height: '100%'}}>
                 <Toolbar>
                 </Toolbar>
             </AppBar>
-        </Box>
+        </div>
     )
 }
 
