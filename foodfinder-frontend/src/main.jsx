@@ -12,8 +12,8 @@ import UiPage from './pages/UiPage/UiPage'
 
 
 const router = createBrowserRouter([
-  {path: "/", element: <Login/>},
-  {path: "/UiPage", element: <UiPage/>}
+  /*{path: "/", element: <Login/>}, */
+  {path: "/", element: <UiPage/>}
 ]); 
 
 
