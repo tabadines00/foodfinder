@@ -38,13 +38,14 @@ function Simple () {
             console.error('Geolocation is not supported in this browser.');
         }
     }, []);
-
+  
     useEffect(() => {
         // Fetch data when the component mounts
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `https://10.0.0.158:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                    /*`https://10.0.0.158:3000*/
+                       `https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
                     //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
                 );
                 setData(response.data); // Update the component's state with the fetched data
