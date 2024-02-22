@@ -9,7 +9,7 @@ import './SwipeCard.css';
 
 
 function Simple () {
-    const {count, setCount, items, addItem} = useMyContext()
+    const {count, setCount, items, setItems, addItem} = useMyContext()
     const [lastDirection, setLastDirection] = useState()
     const [data, setData] = useState([]); // Initialize state for the fetched data
     const [coords, setCoords] = useState([null, null])
@@ -72,7 +72,7 @@ function Simple () {
         sendToBackend(items)
         
         //reset yes choice to an empty array
-        items = ([]); 
+        setItems([]); 
     }
       
     console.log('removing: ' + nameToDelete)

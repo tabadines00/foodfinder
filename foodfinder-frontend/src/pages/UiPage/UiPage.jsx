@@ -3,7 +3,7 @@ import axios from 'axios';
 import Container from '@mui/material/Container'; 
 import Box from '@mui/material/Box'; 
 import Navbar from '../../components/Navbar/Navbar';
-import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
+//import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
 import BottomBar from '../../components/BottomBar/BottomBar';
 import Simple from '../../components/SwipeCard/Simple';
 import { MyProvider } from '../../Context'; 
