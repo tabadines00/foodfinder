@@ -93,7 +93,7 @@ app.listen(PORT, () => {
 
 // OAuth login protocol
 
-mongoose.connect(process.env.MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect(process.env.MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(cookieSession({
   //standard formula for calculating a day ms 
@@ -105,9 +105,9 @@ app.use(cookieSession({
 app.use(passport.initialize()); 
 app.use(passport.session()); 
 
-app.get('/auth/google', passport,passport.authenticate('google', {
+app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile']
-}))
+}))      //passport
 
 app.get('auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}),
 function(req, res) {
