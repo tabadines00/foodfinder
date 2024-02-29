@@ -45,7 +45,7 @@ function Simple () {
             try {
                 const response = await axios.get(
                     /*`https://10.0.0.158:3000*/
-                       `https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                    `https://10.0.0.158:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
                     //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
                 );
                 setData(response.data); // Update the component's state with the fetched data
@@ -62,6 +62,9 @@ function Simple () {
 
 
   const swiped = (direction, nameToDelete, business) => {
+    const newFilteredData = data.filter(business => business.name !== nameToDelete);
+    setData(newFilteredData);
+
     if (direction === 'right') {
      
       setCount(prevCount => prevCount + 1);
@@ -102,14 +105,14 @@ function Simple () {
   return (
       <div className='cardContainer' style={{margin: 0}}>
         {data?.map((business) =>
-          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} style={{maxWidth: "100%",}}>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{maxWidth: "100%",}}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
               <IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white"}}><InfoIcon /></IconButton>
               {render && <SwipeCardDesc Data={business}/>}
             <h3 style={{color: "white", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
                 <p style={{position: "absolute", fontSize: "12px", margin: "10px", bottom:  !render ? '8%' : '18%' }}>{business.categories.join(', ')}</p>
             </div>
-          </TinderCard>
+          </TinderCard> 
         )}
       </div>
 
