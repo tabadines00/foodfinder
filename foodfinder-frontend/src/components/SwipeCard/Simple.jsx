@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import GetLocation from './GetLocation'; 
+import Geolocation from 'react-native-geolocation-service';
 import TinderCard from 'react-tinder-card';
 import SwipeCardDesc from './SwipeCardDesc/SwipeCardDesc';
 import InfoIcon from '@mui/icons-material/Info';
+import MapIcon from '@mui/icons-material/Map';
+import Button from '@mui/material/Button'; 
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography'; 
+import TextField from '@mui/material/TextField'; 
 import { useMyContext } from '../../Context'; 
 import axios from 'axios';
 import './SwipeCard.css'; 
@@ -36,6 +42,21 @@ function Simple () {
             );
         } else {
             console.error('Geolocation is not supported in this browser.');
+            Geolocation.requestAuthorization('always'); 
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                  const latitude = position.coords.latitude;
+                  const longitude = position.coords.longitude;
+                  console.log('Latitude:', latitude);
+                  console.log('Longitude:', longitude);
+                  setCoords([latitude, longitude])
+                  // Call fetchData with the obtained coordinates
+                  //fetchData(longitude, latitude);
+              },
+              (error) => {
+              console.error('Error getting user location:', error);
+              }
+          );
         }
     }, []);
   
@@ -104,6 +125,7 @@ function Simple () {
 
   return (
       <div className='cardContainer' style={{display: "flex", justifyContent: "center", position:"relative", alignItems: "center", paddingBottom: "65px", marginLeft: "22px"}}>
+        <GetLocation coords={coords} setCoords={setCoords} style={{ display: setCoords ? 'none' : 'block'}}/>
         {data?.map((business) =>
           <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "400px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
