@@ -41,7 +41,7 @@ const GetLocation = ({coords, setCoords}) => {
         if(data && data.length > 0) {
             const {lat, lon } = data[0];
             setCoords([lat, lon]);
-            console.log('New coords set:', {lat, lon});
+            console.log('New coords set:', [lat, lon]);
         } else {
             setCoords(null); 
         }
@@ -49,23 +49,23 @@ const GetLocation = ({coords, setCoords}) => {
     }; 
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (coords[0] !== null && coords[1] !== null) {
-                try {
-                    const response = await axios.get(`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`);
-                    setData(response.data);
-                    console.log("Fetched data successfully:", response.data);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         if (coords[0] !== null && coords[1] !== null) {
+    //             try {
+    //                 const response = await axios.get(`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`);
+    //                 setData(response.data);
+    //                 console.log("Fetched data successfully:", response.data);
+    //             } catch (error) {
+    //                 console.error('Error fetching data:', error);
+    //             }
+    //         }
+    //     };
 
-        if (coords[0] !== null && coords[1] !== null) {
-            fetchData();
-        }
-    }, [coords]);
+    //     if (coords[0] !== null && coords[1] !== null) {
+    //         fetchData();
+    //     }
+    // }, [coords]);
 
 
    
@@ -74,7 +74,7 @@ const GetLocation = ({coords, setCoords}) => {
         <MapIcon sx={{fontSize: "72px", color: "#FB0000"}}/>
           <form onSubmit={fetchCoordinates} style={{display: "flex", flexDirection: "column", rowGap: "16px"}}>
           <Typography sx={{fontSize: "24px", color: "#FB0000"}}>We are unable to find you location</Typography>
-           <TextField defaultValue="500 Castro St, Mountain View, CA, USA" label="500 Castro St, Mountain View, CA, USA" value={location} onChange={handleChange} id="margin-none" sx={{zIndex: 0}} />
+           <TextField defaultValue="500 Castro St, Mountain View, CA, USA" label="Current Address" value={location} onChange={handleChange} id="margin-none" sx={{zIndex: 0}} />
             <Button type="submit" >Enter</Button>
           </form>
       </div>
