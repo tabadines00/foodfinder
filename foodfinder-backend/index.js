@@ -123,6 +123,54 @@ app.get('/logout', (req, res) => {
 })
 
 
+
+
+
+
+
+
+app.post('/geocode', async (req, res) => {
+  const { address } = req.body; // Assume address is sent in the request body
+  if (!address) {
+      return res.status(400).send({ error: 'Address is required' });
+  }
+
+  const encodedAddress = encodeURIComponent(address);
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}`;
+
+  try {
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              'User-Agent': 'YourApp/1.0 (YourContactEmailAddress)', // Replace with your app name and contact email
+          },
+      });
+      const data = await response.json();
+
+      if (data.length > 0) {
+          // Just return the first result for simplicity
+          const { lat, lon } = data[0];
+          res.send({ latitude: lat, longitude: lon });
+      } else {
+          res.status(404).send({ error: 'No results found' });
+      }
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).send({ error: 'Failed to fetch data' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
 https.createServer(certOptions, app).listen(3000, () => {
   console.log('Server listening on https://localhost:3000');
 });

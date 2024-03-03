@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import TinderCard from 'react-tinder-card'
-import SwipeCardDesc from './SwipeCardDesc/SwipeCardDesc'
+import React, { useState, useEffect } from 'react';
+import GetLocation from './GetLocation'; 
+import Geolocation from 'react-native-geolocation-service';
+import TinderCard from 'react-tinder-card';
+import SwipeCardDesc from './SwipeCardDesc/SwipeCardDesc';
 import InfoIcon from '@mui/icons-material/Info';
+import MapIcon from '@mui/icons-material/Map';
+import Button from '@mui/material/Button'; 
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography'; 
+import TextField from '@mui/material/TextField'; 
 import { useMyContext } from '../../Context'; 
-import axios from 'axios'
+import axios from 'axios';
 import './SwipeCard.css'; 
 
 
@@ -36,6 +42,21 @@ function Simple () {
             );
         } else {
             console.error('Geolocation is not supported in this browser.');
+            Geolocation.requestAuthorization('always'); 
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                  const latitude = position.coords.latitude;
+                  const longitude = position.coords.longitude;
+                  console.log('Latitude:', latitude);
+                  console.log('Longitude:', longitude);
+                  setCoords([latitude, longitude])
+                  // Call fetchData with the obtained coordinates
+                  //fetchData(longitude, latitude);
+              },
+              (error) => {
+              console.error('Error getting user location:', error);
+              }
+          );
         }
     }, []);
   
@@ -45,7 +66,7 @@ function Simple () {
             try {
                 const response = await axios.get(
                     /*`https://10.0.0.158:3000*/
-                       `https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                    `https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
                     //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
                 );
                 setData(response.data); // Update the component's state with the fetched data
@@ -62,6 +83,9 @@ function Simple () {
 
 
   const swiped = (direction, nameToDelete, business) => {
+    const newFilteredData = data.filter(business => business.name !== nameToDelete);
+    setData(newFilteredData);
+
     if (direction === 'right') {
      
       setCount(prevCount => prevCount + 1);
@@ -100,16 +124,17 @@ function Simple () {
   }; 
 
   return (
-      <div className='cardContainer' style={{margin: 0}}>
+      <div className='cardContainer' style={{display: "flex", justifyContent: "center", position:"relative", alignItems: "center", paddingBottom: "65px", marginLeft: "22px"}}>
+        <GetLocation coords={coords} setCoords={setCoords} style={{ display: setCoords ? 'none' : 'block'}}/>
         {data?.map((business) =>
-          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} style={{maxWidth: "100%",}}>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "400px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
-              <IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white"}}><InfoIcon /></IconButton>
+              <IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>
               {render && <SwipeCardDesc Data={business}/>}
             <h3 style={{color: "white", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
                 <p style={{position: "absolute", fontSize: "12px", margin: "10px", bottom:  !render ? '8%' : '18%' }}>{business.categories.join(', ')}</p>
             </div>
-          </TinderCard>
+          </TinderCard> 
         )}
       </div>
 
