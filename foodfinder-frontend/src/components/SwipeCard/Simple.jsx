@@ -22,6 +22,19 @@ function Simple () {
     const [yesChoice, setYesChoice] = useState([])
     const [render, setRender] = useState(false); 
 
+    /* IMPLEMENT "Open in Google Maps?" */
+    const toGoogleMaps = () => {
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+          console.log("This is an iOS device.");
+          // mapUrl should look like "comgooglemaps://?daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York"
+          // mapUrl = "comgooglemaps://?daddr=" + business.address.replaceAll(" ", "+")
+          // redirect to iosUrl to launch Google Maps
+      } else {
+          console.log("This is not an iOS device!");
+          // mapUrl = "https://www.google.com/maps/dir/?api=1&destination=" + business.address.replaceAll(" ", "+").replaceAll(",", "")
+          // redirect to mapUrl for Google Maps in the Browser
+      }
+    }
 
     useEffect(() => {
         // Check for geolocation support and request user's location
