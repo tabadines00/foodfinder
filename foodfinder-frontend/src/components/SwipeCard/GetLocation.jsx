@@ -49,23 +49,23 @@ const GetLocation = ({coords, setCoords}) => {
     }; 
 
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         if (coords[0] !== null && coords[1] !== null) {
-    //             try {
-    //                 const response = await axios.get(`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`);
-    //                 setData(response.data);
-    //                 console.log("Fetched data successfully:", response.data);
-    //             } catch (error) {
-    //                 console.error('Error fetching data:', error);
-    //             }
-    //         }
-    //     };
+      useEffect(() => {
+        const fetchData = async () => {
+            if (coords[0] !== null && coords[1] !== null) {
+                try {
+                    const response = await axios.get(`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`);
+                    setData(response.data);
+                    console.log("Fetched data successfully:", response.data);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+        };
 
-    //     if (coords[0] !== null && coords[1] !== null) {
-    //         fetchData();
-    //     }
-    // }, [coords]);
+        if (coords[0] !== null && coords[1] !== null) {
+            fetchData();
+        }
+     }, [coords]);
 
 
    
