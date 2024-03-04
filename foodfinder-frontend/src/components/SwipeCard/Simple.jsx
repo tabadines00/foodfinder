@@ -16,9 +16,9 @@ import './SwipeCard.css';
 
 let backendUrl = ""
 if(process.env.NODE_ENV === "development") {
-    backendUrl = import.meta.env.BACKEND_URL_DEV
+    backendUrl = import.meta.env.VITE_BACKEND_URL_DEV
 } else {
-    backendUrl = import.meta.env.BACKEND_URL_PROD
+    backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 }
 
 function Simple () {
