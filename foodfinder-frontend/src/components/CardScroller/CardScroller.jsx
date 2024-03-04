@@ -22,8 +22,7 @@ const CardScroller = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', overflowX: 'auto', paddingTop: "20px", height: '100%', width: '100vw',}}>
-
+    <div style={{ display: 'flex', overflowX: 'auto', paddingTop: "20px", height: '100%', }}>
         {items?.map((business) =>
 <div style={{position: 'static',height: '80%',width: '100%', marginLeft: '20px',}}>
 <div key={business.id} style={{ backgroundImage: `url(${business.image_url})`, minWidth: '300px'}} className='card'>
@@ -38,7 +37,6 @@ const CardScroller = () => {
   )}
 
 export default CardScroller;
-
 
 
 

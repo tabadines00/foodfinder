@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ListIcon from '@mui/icons-material/List';
 import PreferenceDistance from './PreferenceDistance/PreferenceDistance'
 import { useMyContext } from '../../Context'
+import { Opacity } from '@mui/icons-material';
 
 
 
@@ -27,6 +28,30 @@ const Navbar = () => {
     const {count} = useMyContext();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [activeContent, setActiveContent] = useState('default');
+    //new
+    const [drawerWidth, setDrawerWidth] = useState(450); // Default drawer width
+    const [offset, setOffset] = useState(0);
+
+    // Function to calculate and update offset
+    const updateOffset = () => {
+        const uiPageWidth = 450; // Adjust this based on your UiPage's actual width
+        const windowWidth = window.innerWidth;
+        const newOffset = Math.max(windowWidth - uiPageWidth, 0) / 2; // Ensuring the offset is not negative
+        setOffset(newOffset);
+    };
+
+    useEffect(() => {
+        updateOffset(); // Calculate initial offset
+        window.addEventListener('resize', updateOffset); // Recalculate when window resizes
+
+        // Cleanup listener when component unmounts
+        return () => {
+            window.removeEventListener('resize', updateOffset);
+        };
+    }, []);
+
+
+//new
 
     // Function to handle list item click
     const handleListItemClick = (content) => {
@@ -79,7 +104,7 @@ const Navbar = () => {
                 </div> };
             case 'Preferences':
                 return { width: '100%', content: 
-                <div style={{display: "flex", flexDirection: "column", height: "100vh"}}> 
+                <div style={{display: "flex", flexDirection: "column", height: "100vh", width: '100%',}}> 
                     <div style={{display: "flex", 
                                  flexDirection: "row", 
                                  color: "#605656", 
@@ -135,8 +160,8 @@ const Navbar = () => {
     const { width, content } = getDrawerContent();
 
     return (
-        <div  style={{flexGrow: 1, width: "100%", height: "7%", maxWidth: "360px",}}>
-            <AppBar position='static' sx={{backgroundColor: "#EEEEEE", borderRadius: "11px 11px 0 0", width: "100%", height: "100%", boxShadow: "none"}}>
+        <div  style={{ flexGrow: 1, width: "100%", height: "7%", maxWidth: "360px",}}>
+            <AppBar position='static' sx={{backgroundColor: "#EEEEEE", borderRadius: "11px 11px 0 0", width: "100%", height: "100%", boxShadow: "none",}}>
                 <Toolbar>
                     <Typography variant="h6" align={"left"} component="div" sx={{flexGrow: 1, fontFamily:'Philosopher, sans-serif', color:"#FB0000"}}>
                         FoodFinder
@@ -146,16 +171,20 @@ const Navbar = () => {
                     </IconButton>
                 </Toolbar>
             </AppBar>
+            
+            
             <Drawer
-                anchor='right'
+                anchor="top"
                 open={isDrawerOpen}
                 onClose={() => setDrawerOpen(false)}
-                PaperProps={{ sx: { width } }}
+                PaperProps={{ sx: { width, height: "100%", marginLeft: `${offset}px`, borderRadius: "11px 11px 11px 11px", maxWidth: drawerWidth} }}
             >
-                <Box sx={{ width }} role="presentation">
+                <Box sx={{ maxWidth: drawerWidth,}}>
                     {content}
                 </Box>
             </Drawer>
+          
+            
         </div>
     );
 };

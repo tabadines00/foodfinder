@@ -16,7 +16,7 @@ const UiPage = () => {
 
  return(
     <MyProvider> 
-   <div style={{width: "100vw", display: "flex", justifyContent: "center", alignItems: "center",}}> 
+   <div style={{ width: "100%", maxWidth: "450px", display: "flex", justifyContent: "center", alignItems: "center",}}> 
      <div style={{ maxWidth: "450px", width: '100%', height: "100vh",  overflow: "hidden",}} className="ui-page-parent"> 
         <Navbar/>
         <Simple />

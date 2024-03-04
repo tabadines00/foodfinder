@@ -45,14 +45,15 @@ app.get('/api/yelpdata', async (req, res) => {
     })
     .then(({ data }) => {
       // Create a new object to send to the frontend
-      const simplifiedList = data.businesses.map(({ id, name, image_url, categories, rating, price }) => (
+      const simplifiedList = data.businesses.map(({ id, name, image_url, categories, rating, price, location }) => (
         { 
           id,
           name,
           image_url,
           categories: categories.map(category => category.title),
           rating,
-          price
+          price,
+          address: location.display_address.join(', ')
         }
       ));
       console.log(JSON.stringify(simplifiedList))
@@ -174,3 +175,8 @@ app.post('/geocode', async (req, res) => {
 https.createServer(certOptions, app).listen(3000, () => {
   console.log('Server listening on https://localhost:3000');
 });
+
+
+
+
+
