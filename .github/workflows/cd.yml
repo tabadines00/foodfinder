@@ -51,9 +51,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: $AWS_ROLE_ARN
           role-session-name: deploymentsession
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: $AWS_REGION
 
       # Upload a file to AWS S3
       - name: Ensure files are there
