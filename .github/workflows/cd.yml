@@ -20,16 +20,16 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install Dependencies
-        working-directory: ./foodfinder-frontend
+        working-directory: ./${{ secrets.REACT_PROJECT_DIR }}
         run: npm install
       - name: Run npm build
-        working-directory: ./foodfinder-frontend
+        working-directory: ./${{ secrets.REACT_PROJECT_DIR }}
         run: npm run build --if-present
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
           name: dist
-          path: ./foodfinder-frontend/dist
+          path: ./${{ secrets.REACT_PROJECT_DIR }}/dist
 
   deploy:
     runs-on: ubuntu-latest
@@ -39,18 +39,16 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: dist
-          path: ./foodfinder-frontend/dist
+          path: ./${{ secrets.REACT_PROJECT_DIR }}/dist
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          #role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          role-to-assume: arn:aws:iam::136124442756:role/OIDC-Github-Runner
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: deploymentsession
-          #aws-region: ${{ secrets.AWS_REGION }}
-          aws-region: us-west-1
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: Print assumed role
         run: aws sts get-caller-identity
       # Upload a file to AWS S3
       - name: Copy dist to S3
-        run: aws s3 cp ./foodfinder-frontend/dist s3://${{ secrets.AWS_BUCKET_NAME }}/ --recursive
+        run: aws s3 cp ./${{ secrets.REACT_PROJECT_DIR }}/dist s3://${{ secrets.AWS_BUCKET_NAME }}/ --recursive
