@@ -14,6 +14,12 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar'; 
 import './SwipeCard.css'; 
 
+let backendUrl = ""
+if(process.env.NODE_ENV === "development") {
+    backendUrl = import.meta.env.BACKEND_URL_DEV
+} else {
+    backendUrl = import.meta.env.BACKEND_URL_PROD
+}
 
 function Simple () {
     const {count, setCount, items, setItems, addItem} = useMyContext()
@@ -83,7 +89,8 @@ function Simple () {
                 const response = await axios.get(
                     /*`https://10.0.0.158:3000*/
                     //`https://r65qphcnlh5nrxe6pmncjtuuu40ugjmq.lambda-url.us-west-1.on.aws?latitude=${coords[0]}&longitude=${coords[1]}`
-                    `https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                    //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
+                    backendUrl + `?latitude=${coords[0]}&longitude=${coords[1]}`
                 );
                 setData(response.data); // Update the component's state with the fetched data
                 console.log("success");
@@ -126,7 +133,7 @@ function Simple () {
   }
 
   const sendToBackend = (choices) => {
-    axios.post('https://localhost:3000/api/sendChoices', { choices })
+    axios.post(backendUrl + 'api/sendChoices', { choices })
       .then((response) => {
         console.log('choices sent successfully', response.data)
       })

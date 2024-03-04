@@ -12,7 +12,12 @@ import axios from 'axios';
 import './SwipeCard.css'; 
 
 
-
+let backendUrl = ""
+if(process.env.NODE_ENV === "development") {
+    backendUrl = import.meta.env.BACKEND_URL_DEV
+} else {
+    backendUrl = import.meta.env.BACKEND_URL_PROD
+}
 
 
 const GetLocation = ({coords, setCoords}) => {
@@ -53,7 +58,7 @@ const GetLocation = ({coords, setCoords}) => {
         const fetchData = async () => {
             if (coords[0] !== null && coords[1] !== null) {
                 try {
-                    const response = await axios.get(`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`);
+                    const response = await axios.get(backendUrl+`?latitude=${coords[0]}&longitude=${coords[1]}`);
                     setData(response.data);
                     console.log("Fetched data successfully:", response.data);
                 } catch (error) {
