@@ -24,6 +24,9 @@ jobs:
         run: npm install
       - name: Run npm build
         working-directory: ./${{ secrets.REACT_PROJECT_DIR }}
+        env:
+          VITE_BACKEND_URL_PROD: ${{ secrets.VITE_BACKEND_URL }}
+          REACT_APP_EMAIL: ${{ secrets.REACT_APP_EMAIL }}
         run: npm run build --if-present
       - name: Upload artifacts
         uses: actions/upload-artifact@master
