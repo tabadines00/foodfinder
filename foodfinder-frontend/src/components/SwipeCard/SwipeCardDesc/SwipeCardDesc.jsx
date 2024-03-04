@@ -12,7 +12,7 @@ console.log(Data.rating)
 return (
     <div style={{position: "absolute", 
                  width: "100%", 
-                 maxHeight: 80, 
+                 maxHeight: 90, 
                  bottom: '0%', 
                  borderRadius: '0 0 11px 11px', 
                  backgroundColor: 'white', 
@@ -28,6 +28,11 @@ return (
     <Typography sx={{fontSize: "14px", marginLeft:  "7px"}}>
      {Data.price} 
     </Typography>  
+    </div>
+    <div style={{display: "flex", flexDirection: "row", }}> 
+    <Typography sx={{fontSize: "14px", marginLeft:  "0px"}}>
+     {Data.address} 
+    </Typography>
     </div>
     <div style={{display: "flex", flexDirection: "row", paddingBottom: 35}}>
     <Typography align='left' sx={{fontSize: "14px",}}>
