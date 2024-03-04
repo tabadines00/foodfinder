@@ -40,8 +40,6 @@ jobs:
 
     needs: [build]
     steps:
-    #  - name: Git clone the repository
-    #    uses: actions/checkout@v4
       - name: Download artifacts
         uses: actions/download-artifact@master
         with:
@@ -56,13 +54,6 @@ jobs:
           aws-region: $AWS_REGION
 
       # Upload a file to AWS S3
-      - name: Ensure files are there
-        run: ls ./foodfinder-frontend/dist
-      - name: Debug
-        run: |
-          echo "AWS_BUCKET_NAME: $AWS_BUCKET_NAME"
-          echo "AWS_REGION: $AWS_REGION"
-          echo "AWS_ROLE_ARN: $AWS_ROLE_ARN"
       - name: Copy dist to S3
         run: |
           aws s3 cp ./foodfinder-frontend/dist s3://$AWS_BUCKET_NAME/
