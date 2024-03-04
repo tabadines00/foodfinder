@@ -5,13 +5,13 @@ import './App.css'
 import UiPage from './pages/UiPage/UiPage'
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
+    <>   
       <UiPage />
-    </>
+     </>
   )
 }
 
-export default App
+export default App;
