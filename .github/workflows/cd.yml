@@ -5,10 +5,6 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-env:
-  BUCKET_NAME : ${{ secrets.AWS_BUCKET_NAME }}
-  AWS_REGION : ${{ secrets.AWS_REGION }}
-
 # permission can be added at job level or workflow level
 permissions:
   id-token: write   # This is required for requesting the JWT
@@ -37,6 +33,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    env:
+      AWS_BUCKET_NAME : ${{ secrets.AWS_BUCKET_NAME }}
+      AWS_REGION : ${{ secrets.AWS_REGION }}
+
     needs: [build]
     steps:
     #  - name: Git clone the repository
@@ -59,4 +59,4 @@ jobs:
         run: ls ./foodfinder-frontend/dist
       - name: Copy dist to S3
         run: |
-          aws s3 cp ./foodfinder-frontend/dist s3://${{ secrets.AWS_BUCKET_NAME }}/
+          aws s3 cp ./foodfinder-frontend/dist s3://$AWS_BUCKET_NAME/
