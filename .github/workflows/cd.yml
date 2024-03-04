@@ -33,11 +33,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    env:
-      AWS_BUCKET_NAME : ${{ secrets.AWS_BUCKET_NAME }}
-      AWS_REGION : ${{ secrets.AWS_REGION }}
-      AWS_ROLE_ARN : ${{ secrets.AWS_ROLE_ARN }}
-
     needs: [build]
     steps:
       - name: Download artifacts
@@ -49,11 +44,13 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: $AWS_ROLE_ARN
+          #role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::136124442756:role/OIDC-Github-Runner
           role-session-name: deploymentsession
-          aws-region: $AWS_REGION
+          #aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-west-1
 
       # Upload a file to AWS S3
       - name: Copy dist to S3
         run: |
-          aws s3 cp ./foodfinder-frontend/dist s3://$AWS_BUCKET_NAME/
+          aws s3 cp ./foodfinder-frontend/dist s3://${{ secrets.AWS_BUCKET_NAME }}/
