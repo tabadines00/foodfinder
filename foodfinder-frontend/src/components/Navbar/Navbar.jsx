@@ -24,7 +24,7 @@ import { Opacity } from '@mui/icons-material';
 
 
 
-const Navbar = () => {
+const Navbar = ({containerHeight, heightOffset}) => {
     const {count} = useMyContext();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [activeContent, setActiveContent] = useState('default');
@@ -177,7 +177,7 @@ const Navbar = () => {
                 anchor="top"
                 open={isDrawerOpen}
                 onClose={() => setDrawerOpen(false)}
-                PaperProps={{ sx: { width, height: "100%", marginLeft: `${offset}px`, borderRadius: "11px 11px 11px 11px", maxWidth: drawerWidth} }}
+                PaperProps={{ sx: { width, height: `${containerHeight}px`, marginLeft: `${offset}px`, marginTop: `${heightOffset}px`, borderRadius: "11px 11px 11px 11px", maxWidth: drawerWidth} }}
             >
                 <Box sx={{ maxWidth: drawerWidth,}}>
                     {content}

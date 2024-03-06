@@ -75,11 +75,11 @@ const GetLocation = ({coords, setCoords}) => {
 
    
     return(
-        <div style={{maxHeight: "30%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+        <div style={{maxHeight: "30%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginRight: "20px"}}>
         <MapIcon sx={{fontSize: "72px", color: "#FB0000"}}/>
           <form onSubmit={fetchCoordinates} style={{display: "flex", flexDirection: "column", rowGap: "16px"}}>
           <Typography sx={{fontSize: "24px", color: "#FB0000"}}>We are unable to find you location</Typography>
-           <TextField defaultValue="500 Castro St, Mountain View, CA, USA" label="Current Address" value={location} onChange={handleChange} id="margin-none" sx={{zIndex: 0}} />
+           <TextField defaultValue="500 Castro St, Mountain View, CA, USA" label="500 Castro St, Mountain View, CA, USA" value={location} onChange={handleChange} id="margin-none" sx={{zIndex: 0}} />
             <Button type="submit" >Enter</Button>
           </form>
       </div>
