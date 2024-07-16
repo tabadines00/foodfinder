@@ -1,12 +1,30 @@
 import React from 'react';
 import Typography from '@mui/material/Typography'; 
 import Rating from '@mui/material/Rating'; 
+import { Button } from '@mui/material';
 
-
+/* IMPLEMENT "Open in Google Maps?" */
+const toGoogleMaps = (address) => {
+    let mapUrl = ""
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        console.log("This is an iOS device.");
+        // mapUrl should look like "comgooglemaps://?daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York"
+        mapUrl = "comgooglemaps://maps.google.com/?daddr=" + address.replaceAll(" ", "+")
+        // redirect to iosUrl to launch Google Maps
+    } else {
+        console.log("This is not an iOS device!");
+        mapUrl = "https://www.google.com/maps/dir/?api=1&destination=" + address.replaceAll(" ", "+").replaceAll(",", "")
+        // redirect to mapUrl for Google Maps in the Browser
+    }
+    //window.location.assign(mapUrl)
+    return mapUrl
+}
+    
 
 const SwipeCardDesc = (props) => {
     const {Data} = props; 
-console.log(Data.rating)
+    //console.log(Data.rating)
+    let mapUrl = toGoogleMaps(Data.address)
 
 
 return (
@@ -30,9 +48,10 @@ return (
     </Typography>  
     </div>
     <div style={{display: "flex", flexDirection: "row", }}> 
-    <Typography sx={{fontSize: "14px", marginLeft:  "0px"}}>
-     {Data.address} 
-    </Typography>
+        <Typography sx={{fontSize: "14px", marginLeft:  "0px"}}>
+        {Data.address} 
+        </Typography>
+        <Button className="pressable" color="link" href={mapUrl}>Maps</Button>
     </div>
     <div style={{display: "flex", flexDirection: "row", paddingBottom: 35}}>
     <Typography align='left' sx={{fontSize: "14px",}}>
