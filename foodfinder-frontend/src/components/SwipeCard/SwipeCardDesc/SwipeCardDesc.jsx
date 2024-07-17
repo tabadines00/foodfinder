@@ -51,7 +51,7 @@ return (
         <Typography sx={{fontSize: "14px", marginLeft:  "0px"}}>
         {Data.address} 
         </Typography>
-        <Button className="pressable" color="link" href={mapUrl}>Maps</Button>
+        <Button className="pressable" variant="contained" href={mapUrl}>Maps</Button>
     </div>
     <div style={{display: "flex", flexDirection: "row", paddingBottom: 35}}>
     <Typography align='left' sx={{fontSize: "14px",}}>
