@@ -151,8 +151,8 @@ function Simple () {
         {data?.map((business) =>
           <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "400px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
-              <IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>
-              {render && <SwipeCardDesc Data={business}/>}
+              {/*<IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>*/}
+              {/*render &&*/ <SwipeCardDesc Data={business}/>}
             <h3 style={{color: "white", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
                 <p style={{position: "absolute", fontSize: "12px", margin: "10px", bottom:  !render ? '8%' : '18%' }}>{business.categories.join(', ')}</p>
             </div>
