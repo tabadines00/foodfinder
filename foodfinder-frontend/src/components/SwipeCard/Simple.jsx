@@ -154,7 +154,7 @@ function Simple () {
               {/*<IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>*/}
               {/*render &&*/ <SwipeCardDesc Data={business}/>}
             <h3 style={{color: "white", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
-                <p style={{position: "absolute", fontSize: "12px", margin: "10px", bottom:  !render ? '8%' : '18%' }}>{business.categories.join(', ')}</p>
+                <p style={{position: "absolute", fontSize: "14px", marginTop: "100px", margin: "10px", bottom:  !render ? '8%' : '17%' }}>{business.categories.join(', ')}</p>
             </div>
           </TinderCard> 
         )}
