@@ -10,10 +10,12 @@ if(process.env.NODE_ENV === "development") {
   configObj = {
                 plugins: [react()],
                 server: {
-                  https: {
-                    key: fs.readFileSync('./localhost+2-key.pem'),
-                    cert: fs.readFileSync('./localhost+2.pem'),
-                  },
+                  /*
+                    https: {
+                        key: fs.readFileSync('./localhost+2-key.pem'),
+                        cert: fs.readFileSync('./localhost+2.pem'),
+                    },
+                    */
                   define: {
                     'process.env': process.env // This makes process.env available, but you need to ensure environment variables are populated correctly.
                   }

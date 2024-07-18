@@ -27,7 +27,7 @@ function Simple () {
     const [data, setData] = useState([]); // Initialize state for the fetched data
     const [coords, setCoords] = useState([null, null])
     const [yesChoice, setYesChoice] = useState([])
-    const [render, setRender] = useState(false); 
+    const [render, setRender] = useState(true); 
 
     /* IMPLEMENT "Open in Google Maps?" *//*
     const toGoogleMaps = () => {
@@ -149,7 +149,7 @@ function Simple () {
       <div className='cardContainer' style={{display: "flex", justifyContent: "center", position:"relative", alignItems: "center", paddingBottom: "22%", marginLeft: "22px"}}>
        { !coords[0] && !coords[1] && <GetLocation coords={coords} setCoords={setCoords} /> }
         {data?.map((business) =>
-          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "400px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "500px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
               {/*<IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>*/}
               {/*render &&*/ <SwipeCardDesc Data={business}/>}

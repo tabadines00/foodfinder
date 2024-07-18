@@ -30,7 +30,7 @@ const SwipeCardDesc = (props) => {
 return (
     <div style={{position: "absolute", 
                  width: "100%", 
-                 maxHeight: 90, 
+                 maxHeight: "100px", 
                  bottom: '0%', 
                  borderRadius: '0 0 11px 11px', 
                  backgroundColor: 'white', 
@@ -41,23 +41,23 @@ return (
                   }}>
 
       <div style={{display: "flex", flexDirection: "row", }}> 
-      <Rating name="read-only" value={Data.rating} percision={0.5} size="small" readOnly/>
-    <Typography sx={{ display: Data.rating && Data.price ? "flex" : "none" ,fontSize: 32, lineHeight: 0, marginLeft: "7px"}}>.</Typography>
-    <Typography sx={{fontSize: "14px", marginLeft:  "7px"}}>
-     {Data.price} 
-    </Typography>  
-    </div>
-    <div style={{display: "flex", flexDirection: "row", }}> 
-        <Typography sx={{fontSize: "14px", marginLeft:  "0px"}}>
-        {Data.address} 
-        </Typography>
-        <Button className="pressable" variant="contained" href={mapUrl}>Maps</Button>
-    </div>
-    <div style={{display: "flex", flexDirection: "row", paddingBottom: 35}}>
-    <Typography align='left' sx={{fontSize: "14px",}}>
-       Categories: {Data.categories}
-    </Typography>
-    </div>
+        <Rating name="read-only" value={Data.rating} percision={0.5} size="small" readOnly/>
+        <Typography sx={{ display: Data.rating && Data.price ? "flex" : "none" ,fontSize: 32, lineHeight: 0, marginLeft: "7px"}}>.</Typography>
+            <Typography sx={{fontSize: "14px", marginLeft:  "7px"}}>
+             {Data.price} 
+            </Typography>  
+        </div>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}> 
+            <Typography sx={{fontSize: "14px", marginLeft:  "0px"}}>
+            {Data.address} 
+            </Typography>
+            <Button className="pressable" variant="contained" href={mapUrl}>Maps</Button>
+        </div>
+        <div style={{display: "flex", flexDirection: "row", paddingBottom: 35}}>
+            <Typography align='left' sx={{fontSize: "14px",}}>
+               Categories: {Data.categories.join(", ")}
+            </Typography>
+        </div>
     </div>
 
 )
