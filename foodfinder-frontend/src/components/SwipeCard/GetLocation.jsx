@@ -19,6 +19,10 @@ if(process.env.NODE_ENV === "development") {
     backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 }
 
+const topOfPage = () => {
+    const navbar = document.getElementsByClassName('ui-page-parent')[0]
+    navbar?.scrollIntoView({behavior: 'smooth'})
+}
 
 const GetLocation = ({coords, setCoords}) => {
     const userEmail = import.meta.env.REACT_APP_EMAIL;
@@ -50,6 +54,7 @@ const GetLocation = ({coords, setCoords}) => {
         } else {
             setCoords(null); 
         }
+        topOfPage()
 
     }; 
 

@@ -4,7 +4,7 @@
   justify-content: center;
   width: 100vw;
   min-height: 100vh;
-  overflow: hidden;
+  /*overflow: hidden;*/
   /* background: linear-gradient(#fff, #999); */
   background: linear-gradient(#e66465, #9198e5);
 }
@@ -15,14 +15,21 @@
 }
 
 #root>div {
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+@media only screen and (max-width: 600px) {
+    #root>div {
+      display: inline;
+    }
+}
+
 .app {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .app>div {

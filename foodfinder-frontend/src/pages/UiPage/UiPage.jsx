@@ -62,8 +62,8 @@ const UiPage = () => {
  return(
     <MyProvider> 
    <div  style={{ width: "100%", maxWidth: "450px", display: "flex", justifyContent: "center",  alignItems: "center",}}> 
-     <div  ref={containerRef} style={{ maxWidth: "450px", width: '100%', height: "100%", maxHeight: "700px", overflow: "hidden",}} className="ui-page-parent"> 
-        <Navbar containerHeight={containerHeight} heightOffset={heightOffset}/>
+     <div  ref={containerRef} style={{ maxWidth: "450px", width: '100%', height: "100%", maxHeight: "900px", /*overflow: "hidden",*/}} className="ui-page-parent"> 
+        <Navbar containerHeight={containerHeight} heightOffset={heightOffset} className="navbar"/>
         <Simple />
       </div>
    </div>
