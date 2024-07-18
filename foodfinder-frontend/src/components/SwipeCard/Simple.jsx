@@ -5,6 +5,7 @@ import TinderCard from 'react-tinder-card';
 import SwipeCardDesc from './SwipeCardDesc/SwipeCardDesc';
 import InfoIcon from '@mui/icons-material/Info';
 import MapIcon from '@mui/icons-material/Map';
+import FastfoodIcon from '@mui/icons-material/Fastfood'
 import Button from '@mui/material/Button'; 
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography'; 
@@ -13,6 +14,9 @@ import { useMyContext } from '../../Context';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar'; 
 import './SwipeCard.css'; 
+
+import responsetest from "./testdata.json" //////////////////////////////////////////////////////////////////////////
+console.log(responsetest)
 
 let backendUrl = ""
 if(process.env.NODE_ENV === "development") {
@@ -28,6 +32,8 @@ function Simple () {
     const [coords, setCoords] = useState([null, null])
     const [yesChoice, setYesChoice] = useState([])
     const [render, setRender] = useState(true); 
+
+    const dev = false ////////////////////////////////////////////////////////////////////////////////////////////
 
     /* IMPLEMENT "Open in Google Maps?" *//*
     const toGoogleMaps = () => {
@@ -86,6 +92,7 @@ function Simple () {
         // Fetch data when the component mounts
         const fetchData = async () => {
             try {
+                if (!dev) { ////////////////////////////////////////////////////////////
                 const response = await axios.get(
                     /*`https://10.0.0.158:3000*/
                     //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
@@ -94,6 +101,11 @@ function Simple () {
                 setData(response.data); // Update the component's state with the fetched data
                 console.log("success");
                 console.log(response.data)
+                } /////////////////////////////////////////////////////////////////////////
+                else {
+                    setData(responsetest)
+                    console.log(responsetest)
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -148,16 +160,29 @@ function Simple () {
   return (
       <div className='cardContainer' style={{display: "flex", justifyContent: "center", position:"relative", alignItems: "center", paddingBottom: "22%", marginLeft: "22px"}}>
        { !coords[0] && !coords[1] && <GetLocation coords={coords} setCoords={setCoords} /> }
-        {data?.map((business) =>
+
+        {coords[0]  && <div style={{justifyContent: "center", position:"relative", alignItems: "center"}}>
+            <FastfoodIcon sx={{fontSize: "72px", color: "#FB0000"}}/>
+            <Typography sx={{fontSize: "24px", color: "#FB0000", margin: "8px"}}>
+             Like it so far?
+            </Typography>
+            <Typography sx={{fontSize: "16px", color: "#808080", marginBottom:  "1em"}}>
+             Log in for more features!
+            </Typography>
+            <Button className="pressable" variant="outlined">Log in</Button>
+        </div>}
+
+        {data?.map((business) => 
           <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "500px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
               {/*<IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>*/}
               {/*render &&*/ <SwipeCardDesc Data={business}/>}
-            <h3 style={{color: "white", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
-                <p style={{position: "absolute", fontSize: "14px", marginTop: "100px", margin: "10px", bottom:  !render ? '8%' : '17%' }}>{business.categories.join(', ')}</p>
+            <h3 style={{color: "white", textAlign: "left", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
+                <p style={{position: "absolute", fontSize: "14px", textAlign: "left", marginTop: "100px", margin: "10px", bottom:  !render ? '8%' : '17%' }}>{business.categories.join(', ')}</p>
             </div>
           </TinderCard> 
         )}
+        
       </div>
 
    

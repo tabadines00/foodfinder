@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'; 
 import Container from '@mui/material/Container'; 
 import Box from '@mui/material/Box'; 
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+
 import Navbar from '../../components/Navbar/Navbar';
 //import SwipeCard from '../../components/SwipeCard/SwipeCard'; 
 import BottomBar from '../../components/BottomBar/BottomBar';
@@ -65,6 +68,7 @@ const UiPage = () => {
      <div  ref={containerRef} style={{ maxWidth: "450px", width: '100%', height: "100%", maxHeight: "900px", /*overflow: "hidden",*/}} className="ui-page-parent"> 
         <Navbar containerHeight={containerHeight} heightOffset={heightOffset} className="navbar"/>
         <Simple />
+        
       </div>
    </div>
     </MyProvider>
