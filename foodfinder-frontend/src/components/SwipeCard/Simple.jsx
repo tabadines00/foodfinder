@@ -96,7 +96,7 @@ function Simple () {
                 const response = await axios.get(
                     /*`https://10.0.0.158:3000*/
                     //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
-                    backendUrl + `?latitude=${coords[0]}&longitude=${coords[1]}`
+                    backendUrl + `/locallist?latitude=${coords[0]}&longitude=${coords[1]}`
                 );
                 setData(response.data); // Update the component's state with the fetched data
                 console.log("success");
