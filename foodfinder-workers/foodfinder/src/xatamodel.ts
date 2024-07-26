@@ -1,0 +1,34 @@
+const xataClient = async (db: string, dbkey: string, query: string, params?: string[]): any => {
+    const response: any = await fetch(db, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": "Bearer " + dbkey,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ statement: query, params: params ? params : [] })
+    })
+    console.log(response)
+    
+    return await response.json()
+}
+
+export const getUsers = async (db: string, dbkey: string): Promise<any[]> => {
+    let query = "SELECT * FROM \"users\";"
+    const users = await xataClient(db, dbkey, query)
+    return users
+}
+
+export const getUser = async (db: string, dbkey: string, id: string): Promise<any> => {
+    let query = "SELECT * FROM \"users\" WHERE xata_id=$1;"
+    let params = [id]
+    const user = await xataClient(db, dbkey, query, params)
+    return user
+}
+
+export const createUser = async (db: string, dbkey: string, user: any): Promise<any> => {
+    let query = "INSERT INTO \"users\" (first_name, email) VALUES ($1,$2) RETURNING *;"
+    let params = [user.first_name, user.email]
+    const res = await xataClient(db, dbkey, query, params)
+    return res
+}

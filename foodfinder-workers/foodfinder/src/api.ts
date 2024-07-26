@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { Bindings } from './bindings'
 import * as model from './model'
+import * as xataModel from "./xatamodel.ts"
 
 /*
 Hono Notes
@@ -14,15 +15,49 @@ Hono Notes
 const api = new Hono<{ Bindings: Bindings }>()
 api.use('*', cors())
 
-//api.get('/', (c) => {
-//  return c.json({ message: 'Hello' })
-//})
+api.get('/users', async (c) => {
+    const db_url = c.env.DB_URL
+    const db_key = c.env.DB_KEY
+    const res = await xataModel.getUsers(db_url, db_key)
+    return c.json(res)
+})
+
+api.get('/user/:id', async (c) => {
+    const id = c.req.param('id')
+    const db_url = c.env.DB_URL
+    const db_key = c.env.DB_KEY
+    
+    const res = await xataModel.getUser(db_url, db_key, id)
+    return c.json(res)
+})
+
+api.post('/signup', async (c) => {
+    const db_url = c.env.DB_URL
+    const db_key = c.env.DB_KEY
+
+    const body = await c.req.json()
+    console.log(body)
+    
+    const res = await xataModel.createUser(db_url, db_key, body["user"])
+    return c.json(res)
+})
+
+api.post('/login', async (c) => {
+    const db_url = c.env.DB_URL
+    const db_key = c.env.DB_KEY
+
+    const body = await c.req.json()
+    console.log(body)
+    
+    const res = await xataModel.createUser(db_url, db_key, body["user"])
+    return c.json(res)
+})
 
 api.get('/locallist', async (c) => {
     const yelpApiKey = c.env.YELP_API_KEY
     const { latitude, longitude } = c.req.query()
     const locallist = await model.fetchYelpData(latitude, longitude, yelpApiKey)
-    return c.json(await locallist)
+    return await c.json(ocallist.json())
 })
 
 api.get('/posts', async (c) => {

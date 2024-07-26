@@ -99,7 +99,7 @@ function Simple () {
                     backendUrl + `locallist?latitude=${coords[0]}&longitude=${coords[1]}`
                 );
                 setData(response.data); // Update the component's state with the fetched data
-                console.log("success");
+                console.log("success"+backendUrl);
                 console.log(response.data)
                 } /////////////////////////////////////////////////////////////////////////
                 else {

@@ -1,7 +1,8 @@
 name = "foodfinderapp"
 compatibility_date = "2024-07-18"
+node_compat = true
 
-# [vars]
+#[vars]
 # MY_VAR = "my-variable"
 
 # [[kv_namespaces]]

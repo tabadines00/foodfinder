@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST Request to CFW</title>
+</head>
+<body>
+    <h1>Send POST Request to CFW</h1>
+    <form id="jobForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        
+        <button type="button" onclick="sendPostRequest()">Submit</button>
+    </form>
+    
+    <script>
+        async function sendPostRequest() {
+            const form = document.getElementById('jobForm');
+            const first_name = form.name.value;
+            const email = form.email.value;
+            
+            const data = {
+                user: {
+                    first_name: first_name,
+                    email: email
+                }
+            };
+            
+            const response = await fetch('http://localhost:8787/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            alert(`Response: ${JSON.stringify(result)}`);
+        }
+    </script>
+</body>
+</html>
+

@@ -12,6 +12,12 @@ export interface Post {
   body: string
 }
 
+//export interface User {
+//  id: string
+//  first_name: string
+//  body: string
+//}
+
 export type Param = {
   title: string
   body: string

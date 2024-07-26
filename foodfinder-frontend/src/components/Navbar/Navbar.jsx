@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography'; 
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
@@ -22,15 +23,31 @@ import PreferenceDistance from './PreferenceDistance/PreferenceDistance'
 import { useMyContext } from '../../Context'
 import { Opacity } from '@mui/icons-material';
 
+import { login, signup } from "../../services/loginService"
 
+let backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 
 const Navbar = ({containerHeight, heightOffset}) => {
     const {count} = useMyContext();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [first_name, setFirstName] = useState('')
+    const [email, setEmail] = useState('')
     const [activeContent, setActiveContent] = useState('default');
     //new
     const [drawerWidth, setDrawerWidth] = useState(450); // Default drawer width
     const [offset, setOffset] = useState(0);
+
+    const createAccount = async (event) => {
+        event.preventDefault()
+        let result = await signup({ first_name: first_name, email: email })
+        return result
+    }
+
+    const signIn = (event) => {
+        event.preventDefault()
+        let result = await login({ first_name: first_name, email: email })
+        return result
+    }
 
     // Function to calculate and update offset
     const updateOffset = () => {
@@ -99,7 +116,12 @@ const Navbar = ({containerHeight, heightOffset}) => {
                 <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Account Details</Typography>
                 </div>
                 <div style={{flexGrow: 1, backgroundColor: "#ececec"}}>
-                 rr
+                    <form onSubmit={createAccount} style={{display: "flex", flexDirection: "column", rowGap: "16px"}}>
+                        <Typography sx={{fontSize: "14px", color: "#808080"}}>Sign Up</Typography>
+                        <TextField label="Name" value={first_name} onChange={(event) => {setFirstName(event.target.value)}}/>
+                        <TextField label="Email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
+                        <Button type="submit" >Enter</Button>
+                     </form>
                 </div>
                 </div> };
             case 'Preferences':
