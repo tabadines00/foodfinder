@@ -27,7 +27,7 @@ import { login, signup } from "../../services/loginService"
 
 let backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 
-const Navbar = ({containerHeight, heightOffset}) => {
+const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
     const {count} = useMyContext();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [first_name, setFirstName] = useState('')
@@ -43,7 +43,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
         return result
     }
 
-    const signIn = (event) => {
+    const signIn = async (event) => {
         event.preventDefault()
         let result = await login({ first_name: first_name, email: email })
         return result
@@ -67,6 +67,13 @@ const Navbar = ({containerHeight, heightOffset}) => {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(menuOpen)
+        setDrawerOpen(menuOpen)
+        if(menuOpen == true) {
+            setActiveContent('account')
+        }
+    }, [menuOpen])
 
 //new
 
@@ -113,7 +120,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
                              alignItems: "center", 
                              borderRadius: "11px 11px 0 0"}}>
                  <IconButton onClick={goBack} sx={{position: "absolute", left: 0 }}><ArrowBackIosIcon fontSize="small" sx={{color: "#605656"}} /></IconButton>
-                <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Account Details</Typography>
+                <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Join Waitlist</Typography>
                 </div>
                 <div style={{flexGrow: 1, backgroundColor: "#ececec"}}>
                     <form onSubmit={createAccount} style={{display: "flex", flexDirection: "column", rowGap: "16px"}}>
@@ -153,7 +160,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
                              alignItems: "center", 
                              borderRadius: "11px 11px 0 0"}}>
                  <IconButton onClick={goBack} sx={{position: "absolute", left: 0 }}><ArrowBackIosIcon fontSize="small" sx={{color: "#605656"}} /></IconButton>
-                <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>List</Typography>
+                <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Saved</Typography>
                 </div>
                 <div style={{flexGrow: 1, backgroundColor: "#ececec"}}>
                  <CardScroller />
@@ -164,7 +171,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
                     <List>
                         <ListItem button onClick={() => handleListItemClick('account')}>
                             <ListItemIcon><AccountCircleIcon /></ListItemIcon>
-                            <ListItemText primary="Account" />
+                            <ListItemText primary="Join Waitlist" />
                         </ListItem>
                         <ListItem button onClick={() => handleListItemClick('Preferences')}>
                             <ListItemIcon><MenuBookIcon /></ListItemIcon>
@@ -172,7 +179,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
                         </ListItem>
                         <ListItem button onClick={() => handleListItemClick('list')}>
                             <ListItemIcon><Badge badgeContent={count} color="primary"><ListIcon /></Badge></ListItemIcon>
-                            <ListItemText primary="List" />
+                            <ListItemText primary="Saved" />
                         </ListItem>
                     </List>
                 )};
@@ -189,7 +196,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
                         FoodFinder
                     </Typography>
                     <IconButton color="inherit" aria-label="Menu" onClick={() => setDrawerOpen(true)} sx={{color: "#605656"}}>
-                        <MenuIcon />
+                        <Badge badgeContent={count} color="primary"><MenuIcon /></Badge>
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -198,7 +205,7 @@ const Navbar = ({containerHeight, heightOffset}) => {
             <Drawer
                 anchor="top"
                 open={isDrawerOpen}
-                onClose={() => setDrawerOpen(false)}
+                onClose={() => {setDrawerOpen(false); setMenuOpen(false)}}
                 PaperProps={{ sx: { width, height: `${containerHeight}px`, marginLeft: `${offset}px`, marginTop: `${heightOffset}px`, borderRadius: "11px 11px 11px 11px", maxWidth: drawerWidth} }}
             >
                 <Box sx={{ maxWidth: drawerWidth,}}>

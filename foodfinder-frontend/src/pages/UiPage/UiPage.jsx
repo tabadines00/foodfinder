@@ -22,6 +22,8 @@ const UiPage = () => {
     const [containerHeight, setContainerHeight] = useState(0);
     const [heightOffset, setHeightOffset] = useState(0);
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     useEffect(() => {
         // Function to update the height
         const updateHeight = () => {
@@ -52,7 +54,7 @@ const UiPage = () => {
       updateHeightOffset(); // Calculate initial offset
       const handleResize = () => updateHeightOffset(); // Define a function to update on resize
       window.addEventListener('resize', handleResize); // Recalculate when window resizes
-      console.log(heightOffset)
+      //console.log(heightOffset)
   
       // Cleanup listener when component unmounts
       return () => {
@@ -65,9 +67,9 @@ const UiPage = () => {
  return(
     <MyProvider> 
    <div  style={{ width: "100%", maxWidth: "450px", display: "flex", justifyContent: "center",  alignItems: "center",}}> 
-     <div  ref={containerRef} style={{ maxWidth: "450px", width: '100%', height: "100%", maxHeight: "900px", /*overflow: "hidden",*/}} className="ui-page-parent"> 
-        <Navbar containerHeight={containerHeight} heightOffset={heightOffset} className="navbar"/>
-        <Simple />
+     <div  ref={containerRef} style={{ maxWidth: "450px", width: '100%', height: "100%", maxHeight: "900px", overflowX: "hidden",}} className="ui-page-parent"> 
+        <Navbar containerHeight={containerHeight} heightOffset={heightOffset} menuOpen={menuOpen} setMenuOpen={setMenuOpen} className="navbar"/>
+        <Simple setMenuOpen={setMenuOpen} />
         
       </div>
    </div>

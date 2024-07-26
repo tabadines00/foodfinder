@@ -29,6 +29,8 @@ const GetLocation = ({coords, setCoords}) => {
     const [location, setLocation] = useState('')
     const [data, setData] = useState(null)
 
+    const dev = true /////////////////////////////////////////////////////
+
     const handleChange = (event) => {
         setLocation(event.target.value)
     }
@@ -73,7 +75,7 @@ const GetLocation = ({coords, setCoords}) => {
         };
 
         if (coords[0] !== null && coords[1] !== null) {
-            fetchData();
+            //fetchData()
         }
      }, [coords]);
 

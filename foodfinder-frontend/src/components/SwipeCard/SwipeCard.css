@@ -52,7 +52,7 @@
     
   }
 
-  .card::before {
+  .cardbg {
     content: '';
     position: absolute;
     border-radius: 20px;

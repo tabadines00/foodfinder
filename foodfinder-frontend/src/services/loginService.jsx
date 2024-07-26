@@ -1,6 +1,6 @@
-backendUrl = "http://localhost:8787/" /////////////////////////////////////////////////////////////
+const backendUrl = "http://localhost:8787/" /////////////////////////////////////////////////////////////
 
-export login = async (user) => {
+export const login = async (user) => {
     // login
     // post to the backend    
     const response = await fetch(backendUrl + 'login', {
@@ -13,7 +13,7 @@ export login = async (user) => {
     
 }
 
-export signup = async (newUser) => {
+export const signup = async (newUser) => {
     const data = {
         user: {
             first_name: newUser.first_name,

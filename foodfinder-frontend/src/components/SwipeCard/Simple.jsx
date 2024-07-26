@@ -14,9 +14,20 @@ import { useMyContext } from '../../Context';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar'; 
 import './SwipeCard.css'; 
+import './tutorial.css';
+import SwipeInfo from './SwipeInfo';
+
+import SwipeIcon from '@mui/icons-material/SwipeRightRounded';
+import PersonPinCircleRoundedIcon from '@mui/icons-material/PersonPinCircleRounded';
+import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
+import DoNotDisturbRoundedIcon from '@mui/icons-material/DoNotDisturbRounded';
+import RamenDiningRoundedIcon from '@mui/icons-material/RamenDiningRounded';
+
 
 import responsetest from "./testdata.json" //////////////////////////////////////////////////////////////////////////
+import { BorderColor } from '@mui/icons-material';
 console.log(responsetest)
+
 
 let backendUrl = ""
 if(process.env.NODE_ENV === "development") {
@@ -25,7 +36,7 @@ if(process.env.NODE_ENV === "development") {
     backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 }
 
-function Simple () {
+function Simple (props) {
     const {count, setCount, items, setItems, addItem} = useMyContext()
     const [lastDirection, setLastDirection] = useState()
     const [data, setData] = useState([]); // Initialize state for the fetched data
@@ -33,28 +44,32 @@ function Simple () {
     const [yesChoice, setYesChoice] = useState([])
     const [render, setRender] = useState(true); 
 
-    const dev = false ////////////////////////////////////////////////////////////////////////////////////////////
+    const { setMenuOpen } = props
 
-    /* IMPLEMENT "Open in Google Maps?" *//*
-    const toGoogleMaps = () => {
-      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-          console.log("This is an iOS device.");
-          // mapUrl should look like "comgooglemaps://?daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York"
-          mapUrl = "comgooglemaps://?daddr=" + business.address.replaceAll(" ", "+")
-          // redirect to iosUrl to launch Google Maps
-      } else {
-          console.log("This is not an iOS device!");
-          mapUrl = "https://www.google.com/maps/dir/?api=1&destination=" + business.address.replaceAll(" ", "+").replaceAll(",", "")
-          // redirect to mapUrl for Google Maps in the Browser
-      }
-      window.location.assign(mapUrl)
-    }
-    */
+    let dev = true ////////////////////////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
         // Check for geolocation support and request user's location
-        if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(
+        if(!dev){ ///////////////////////////////////////////////////////////////////////////////
+          if ('geolocation' in navigator) {
+              navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                      const latitude = position.coords.latitude;
+                      const longitude = position.coords.longitude;
+                      console.log('Latitude:', latitude);
+                      console.log('Longitude:', longitude);
+                      setCoords([latitude, longitude])
+                      // Call fetchData with the obtained coordinates
+                      //fetchData(longitude, latitude);
+                  },
+                  (error) => {
+                  console.error('Error getting user location:', error);
+                  }
+              );
+          } else {
+              console.error('Geolocation is not supported in this browser.');
+              Geolocation.requestAuthorization('always'); 
+              navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
@@ -68,43 +83,33 @@ function Simple () {
                 console.error('Error getting user location:', error);
                 }
             );
-        } else {
-            console.error('Geolocation is not supported in this browser.');
-            Geolocation.requestAuthorization('always'); 
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                  const latitude = position.coords.latitude;
-                  const longitude = position.coords.longitude;
-                  console.log('Latitude:', latitude);
-                  console.log('Longitude:', longitude);
-                  setCoords([latitude, longitude])
-                  // Call fetchData with the obtained coordinates
-                  //fetchData(longitude, latitude);
-              },
-              (error) => {
-              console.error('Error getting user location:', error);
-              }
-          );
+          }
+        } else { ////////////////////////////////////////////////////////////
+          setCoords([-1,-1])
+          console.log("Using test coords... ")
         }
     }, []);
   
     useEffect(() => {
         // Fetch data when the component mounts
+        console.log("mount!")
+        console.log(data)
         const fetchData = async () => {
+            console.log("trying to fetch...")
             try {
                 if (!dev) { ////////////////////////////////////////////////////////////
-                const response = await axios.get(
-                    /*`https://10.0.0.158:3000*/
-                    //`https://localhost:3000/api/yelpdata?latitude=${coords[0]}&longitude=${coords[1]}`
-                    backendUrl + `locallist?latitude=${coords[0]}&longitude=${coords[1]}`
-                );
-                setData(response.data); // Update the component's state with the fetched data
-                console.log("success"+backendUrl);
-                console.log(response.data)
+                  const response = await axios.get(
+                      backendUrl + `locallist?latitude=${coords[0]}&longitude=${coords[1]}`
+                  );
+                  setData(response.data.reverse()); // Update the component's state with the fetched data
+                  console.log("success"+backendUrl);
+                  response.data.map((el) => console.log(el.name))
                 } /////////////////////////////////////////////////////////////////////////
                 else {
-                    setData(responsetest)
-                    console.log(responsetest)
+                    console.log("trying to set test data!")
+                    setData(responsetest.reverse())
+                    console.log("set test data!")
+                    responsetest.map((el) => console.log(el.name))
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -116,11 +121,11 @@ function Simple () {
     }, [coords]);
 
 
-  const swiped = (direction, nameToDelete, business) => {
+  const swiped = (direction, nameToDelete, business, info) => {
     const newFilteredData = data.filter(business => business.name !== nameToDelete);
     setData(newFilteredData);
 
-    if (direction === 'right') {
+    if (direction === 'right' && !info) {
      
       setCount(prevCount => prevCount + 1);
       addItem(business)
@@ -167,28 +172,73 @@ function Simple () {
              Like it so far?
             </Typography>
             <Typography sx={{fontSize: "16px", color: "#808080", marginBottom:  "1em"}}>
-             Log in for more features!
+             Join the waitlist for more features!
             </Typography>
-            <Button className="pressable" variant="outlined">Log in</Button>
+            <Button onClick={() => {setMenuOpen(true)}} className="pressable" variant="outlined">JOIN</Button>
         </div>}
 
         {data?.map((business) => 
-          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{width: "300px", height: "500px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-            <div style={{ backgroundImage: `url(${business.image_url})`}} className='card'>
-              {/*<IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>*/}
-              {/*render &&*/ <SwipeCardDesc Data={business}/>}
-            <h3 style={{color: "white", textAlign: "left", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
-                <p style={{position: "absolute", fontSize: "14px", textAlign: "left", marginTop: "100px", margin: "10px", bottom:  !render ? '8%' : '17%' }}>{business.categories.join(', ')}</p>
-            </div>
+          <TinderCard className='swipe' key={business.id} onSwipe={(dir) => swiped(dir, business.name, business)} onCardLeftScreen={() => outOfFrame(business.name)} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{ backgroundColor: "rgba(0, 0, 0, .3)", width: "300px", height: "500px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            
+              <div style={{  backgroundImage: `url(${business.image_url})`}} className='card'>
+              <div className='cardbg'>
+                {/*<IconButton onClick={toggleRender} style={{position: "absolute", right: 0, bottom: !render ? '11%' : '21%', color: "white", outline: "none"}}><InfoIcon /></IconButton>*/}
+                {/*render &&*/ <SwipeCardDesc Data={business}/>}
+              <h3 style={{ color: "white", textAlign: "left", position: "absolute", fontSize: "20px", margin: "10px", bottom:  !render ? '10%' : '20%' , }}>{business.name}</h3>
+                  <p style={{ position: "absolute", fontSize: "14px", textAlign: "left", marginTop: "100px", margin: "10px", bottom:  !render ? '8%' : '17%' }}>{business.categories.join(', ')}</p>
+              </div>
+              </div>
           </TinderCard> 
         )}
-        
+        <TinderCard className='swipe' key={-1} onSwipe={(dir) => swiped(dir, "", "", true)} onCardLeftScreen={() => outOfFrame()} flickOnSwipe={true}  swipeRequirementType={'velocity'}  style={{ width: "300px", height: "500px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            <div className='card' style={{ border: "2px solid", borderColor:"#FB0000", backgroundColor: "#FFFFFFBB", WebkitBackdropFilter: "blur(3px)", backdropFilter: "blur(10px)", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+              {/* <h3 style={{color: "grey", textAlign: "center", fontSize: "20px", margin: "8px" }}>
+                All of these restauraunts are open now!
+              </h3> */}
+              <div style={{ margin: "0 auto" }}>
+                <div style={{display: "flex", flexDirection:"row"}}>
+                  <RamenDiningRoundedIcon style={{ color: "grey", fontSize: "24px", textAlign: "left", margin: "8px" }}/>
+                  <p style={{ color: "grey", fontSize: "16px", textAlign: "left", margin: "8px" }}>
+                    Restauraunts are open now!
+                  </p>
+                </div>
+                <div style={{display: "flex", flexDirection:"row"}}>
+                  <PersonPinCircleRoundedIcon style={{ color: "grey", fontSize: "24px", textAlign: "left", margin: "8px" }}/>
+                  <p style={{ color: "grey", fontSize: "16px", textAlign: "left", margin: "8px" }}>
+                  Sorted by distance!
+                  </p>
+                </div>
+                <div style={{display: "flex", flexDirection:"row"}}>
+                  <DoNotDisturbRoundedIcon style={{ color: "#FB0000", fontSize: "24px", textAlign: "left", margin: "8px" }}/> 
+                  <p style={{ color: "#FB0000", fontSize: "16px", textAlign: "left", margin: "8px" }}>
+                  Swipe left to discard...
+                  </p>
+                </div>
+                <div style={{display: "flex", flexDirection:"row"}}>
+                  <LibraryAddRoundedIcon style={{ color: "#00691f", fontSize: "24px", textAlign: "left", margin: "8px" }}/>
+                  <p style={{ color: "#00691f", fontSize: "16px", textAlign: "left", margin: "8px" }}>
+                  Swipe right to keep for later!
+                  </p>
+                </div>
+              </div>
+              <div id="wrapper">
+                  <div id="innerwrapper">
+                      <span id="move">
+                        <SwipeIcon sx={{fontSize: "72px", color: "grey"}}/>
+                      </span>
+                  </div>
+              </div>
+              <p style={{ color: "grey", fontSize: "16px", textAlign: "center", margin: "8px" }}>
+                Swipe!
+              </p>
+            </div>
+          </TinderCard> 
       </div>
 
    
   )
 }
 
-export default Simple;  
+export default Simple
 
 
