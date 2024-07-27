@@ -21,7 +21,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ListIcon from '@mui/icons-material/List';
 import PreferenceDistance from './PreferenceDistance/PreferenceDistance'
 import { useMyContext } from '../../Context'
-import { Opacity } from '@mui/icons-material';
+import { EmailOutlined, Opacity } from '@mui/icons-material';
 
 import { login, signup } from "../../services/loginService"
 
@@ -33,20 +33,44 @@ const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
     const [first_name, setFirstName] = useState('')
     const [email, setEmail] = useState('')
     const [activeContent, setActiveContent] = useState('default');
+
+    const [signedUp, setSignedUp] = useState(false);
+    const [errored, setErrored] = useState(false);
     //new
     const [drawerWidth, setDrawerWidth] = useState(450); // Default drawer width
     const [offset, setOffset] = useState(0);
 
     const createAccount = async (event) => {
         event.preventDefault()
-        let result = await signup({ first_name: first_name, email: email })
-        return result
+        if (isValidName(first_name) && isValidEmail(email)) {
+            let result = await signup({ first_name: first_name, email: email })
+            if (result) {
+                setSignedUp(true)
+                setErrored(false)
+                return true
+            } else {
+                setErrored(true)
+                return false
+            }
+        }
     }
 
     const signIn = async (event) => {
         event.preventDefault()
         let result = await login({ first_name: first_name, email: email })
         return result
+    }
+
+    function isValidName(name) {
+        const pattern = /^[A-Za-z.\s_-]+$/;
+        return pattern.test(name)
+    }
+    
+
+    function isValidEmail(emailstr) {
+        // Define a regular expression pattern for email validation.
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(emailstr);
     }
 
     // Function to calculate and update offset
@@ -122,14 +146,19 @@ const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
                  <IconButton onClick={goBack} sx={{position: "absolute", left: 0 }}><ArrowBackIosIcon fontSize="small" sx={{color: "#605656"}} /></IconButton>
                 <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Join Waitlist</Typography>
                 </div>
-                <div style={{flexGrow: 1, backgroundColor: "#ececec"}}>
+                {!signedUp && <div style={{flexGrow: 1, backgroundColor: "#ececec", padding: "1em"}}>
                     <form onSubmit={createAccount} style={{display: "flex", flexDirection: "column", rowGap: "16px"}}>
-                        <Typography sx={{fontSize: "14px", color: "#808080"}}>Sign Up</Typography>
+                        <Typography sx={{ color: "#FB0000", fontSize: "14px", color: "#808080"}}>Sign Up</Typography>
                         <TextField label="Name" value={first_name} onChange={(event) => {setFirstName(event.target.value)}}/>
                         <TextField label="Email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
                         <Button type="submit" >Enter</Button>
                      </form>
-                </div>
+                     <br />
+                     {!signedUp && errored && <Typography sx={{ textAlign: "center", color: "#FB0000", fontSize: "14px"}}>Error while joining the waitlist! Have you joined already?</Typography>}
+                     {!isValidName(first_name) && first_name != "" && <Typography sx={{ textAlign: "center", color: "#FB0000", fontSize: "14px"}}>Please use alphabet characters only</Typography>}
+                     {!isValidEmail(email) && email != "" && <Typography sx={{ textAlign: "center", color: "#FB0000", fontSize: "14px"}}>Invalid email address</Typography>}
+                </div>}
+                {signedUp && <Typography sx={{ textAlign: "center", fontSize: "14px", color: "#808080"}}>Thank you for joining the waitlist!</Typography>}
                 </div> };
             case 'Preferences':
                 return { width: '100%', content: 

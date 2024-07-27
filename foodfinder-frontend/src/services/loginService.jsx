@@ -1,6 +1,6 @@
 const backendUrl = "http://localhost:8787/" /////////////////////////////////////////////////////////////
 
-export const login = async (user) => {
+export const login = async (data) => {
     // login
     // post to the backend    
     const response = await fetch(backendUrl + 'login', {
@@ -22,19 +22,19 @@ export const signup = async (newUser) => {
     };
     // post user data to the background
     // fetch(backendUrl + "login", { 
-    
-    const response = await fetch(backendUrl + 'signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    
-    const result = await response.json();
-    // login 
-    // if (result is not successful)
-        // return an error    
-    // else    
-    login(newUser)
+    let response = {}
+    try {
+        response = await fetch(backendUrl + 'signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        const result = await response.json();
+        // login 
+        return (!result.error)
+    } catch (err) {
+        return false
+    }
 }

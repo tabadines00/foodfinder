@@ -1,4 +1,4 @@
-const xataClient = async (db: string, dbkey: string, query: string, params?: string[]): any => {
+const xataClient = async (db: string, dbkey: string, query: string, params?: string[]): Promise<any> => {
     const response: any = await fetch(db, {
         method: "POST",
         headers: {
@@ -27,8 +27,9 @@ export const getUser = async (db: string, dbkey: string, id: string): Promise<an
 }
 
 export const createUser = async (db: string, dbkey: string, user: any): Promise<any> => {
-    let query = "INSERT INTO \"users\" (first_name, email) VALUES ($1,$2) RETURNING *;"
-    let params = [user.first_name, user.email]
+    let query = "INSERT INTO \"users\" (email, first_name) VALUES ($1,$2) RETURNING *;"
+    console.log(user.email, user.first_name)
+    let params = [user.email, user.first_name]
     const res = await xataClient(db, dbkey, query, params)
     return res
 }
