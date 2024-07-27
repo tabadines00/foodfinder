@@ -29,8 +29,6 @@ const GetLocation = ({coords, setCoords}) => {
     const [location, setLocation] = useState('')
     const [data, setData] = useState(null)
 
-    const dev = true /////////////////////////////////////////////////////
-
     const handleChange = (event) => {
         setLocation(event.target.value)
     }
