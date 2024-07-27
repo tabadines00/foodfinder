@@ -1,4 +1,4 @@
-const backendUrl = "http://localhost:8787/" /////////////////////////////////////////////////////////////
+const backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 
 export const login = async (data) => {
     // login

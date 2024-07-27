@@ -44,6 +44,10 @@ api.post('/signup', async (c) => {
     return c.json(res)
 })
 
+api.get("/signup", (c) => {
+    return c.json({ message: "You are on the latest version, 7/26"})
+})
+
 api.post('/login', async (c) => {
     const db_url = c.env.DB_URL
     const db_key = c.env.DB_KEY
