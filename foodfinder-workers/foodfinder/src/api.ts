@@ -66,7 +66,7 @@ api.get('/locallist', async (c) => {
     const yelpApiKey = c.env.YELP_API_KEY
     const { latitude, longitude } = c.req.query()
     const locallist = await model.fetchYelpData(latitude, longitude, yelpApiKey)
-    return await c.json(locallist.json())
+    return await c.json(locallist)
 })
 
 export default api

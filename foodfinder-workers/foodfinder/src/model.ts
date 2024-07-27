@@ -32,6 +32,7 @@ export const fetchYelpData = async (latitude: string, longitude: string, yelpApi
   if(latitude && longitude) {
         let simplifiedList: any[] = []
       try {
+          console.log(yelpApiKey)
           let res = await fetch(`https://api.yelp.com/v3/businesses/search?open_now=true&sort_by=distance&latitude=${latitude}&longitude=${longitude}&term=food&categories=restaurants&limit=50`, options);
           let data: ApiResponse = await res.json();
             console.log(data)

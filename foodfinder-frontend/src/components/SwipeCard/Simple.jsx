@@ -115,7 +115,7 @@ function Simple (props) {
                 console.error('Error fetching data:', error);
             }
         };
-        if(coords[0]) {
+        if(coords[0] && data == []) {
             fetchData()
         }
     }, [coords]);
