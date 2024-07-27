@@ -40,7 +40,6 @@ return (
                  padding: "10px",
                  paddingBottom: "25px",
                  boxSizing: "border-box",
-                 boxShadow: '0px -10px 10px -10px rgba(0, 0, 0, 0.5)',
                   }}>
 
       <div style={{display: "flex", flexDirection: "row"}}> 
