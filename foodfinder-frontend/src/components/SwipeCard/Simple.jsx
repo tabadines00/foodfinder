@@ -199,13 +199,13 @@ function Simple (props) {
                 <div style={{display: "flex", flexDirection:"row"}}>
                   <RamenDiningRoundedIcon style={{ color: "grey", fontSize: "24px", textAlign: "left", margin: "8px" }}/>
                   <p style={{ color: "grey", fontSize: "16px", textAlign: "left", margin: "8px" }}>
-                    Restauraunts are open now!
+                    Restauraunts are open now
                   </p>
                 </div>
                 <div style={{display: "flex", flexDirection:"row"}}>
                   <PersonPinCircleRoundedIcon style={{ color: "grey", fontSize: "24px", textAlign: "left", margin: "8px" }}/>
                   <p style={{ color: "grey", fontSize: "16px", textAlign: "left", margin: "8px" }}>
-                  Sorted by distance!
+                  Sorted by distance
                   </p>
                 </div>
                 <div style={{display: "flex", flexDirection:"row"}}>
@@ -217,7 +217,7 @@ function Simple (props) {
                 <div style={{display: "flex", flexDirection:"row"}}>
                   <LibraryAddRoundedIcon style={{ color: "#00691f", fontSize: "24px", textAlign: "left", margin: "8px" }}/>
                   <p style={{ color: "#00691f", fontSize: "16px", textAlign: "left", margin: "8px" }}>
-                  Swipe right to keep for later!
+                  Swipe right to keep for later
                   </p>
                 </div>
               </div>
@@ -231,6 +231,13 @@ function Simple (props) {
               <p style={{ color: "grey", fontSize: "16px", textAlign: "center", margin: "8px" }}>
                 Swipe!
               </p>
+              <br />
+              <p style={{ color: "grey", fontSize: "16px", textAlign: "center", margin: "8px" }}>
+                Stay in touch!
+              </p>
+              <div style={{display: 'flex', justifyContent: "center"}}>
+                <Button onClick={() => {setMenuOpen(true)}} style={{ maxWidth: "fit-content"}} className="pressable" variant="outlined">JOIN THE WAITLIST</Button>
+              </div>
             </div>
           </TinderCard> 
       </div>

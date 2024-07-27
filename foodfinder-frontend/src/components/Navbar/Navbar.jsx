@@ -148,7 +148,7 @@ const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
                 </div>
                 {!signedUp && <div style={{flexGrow: 1, backgroundColor: "#ececec", padding: "1em"}}>
                     <form onSubmit={createAccount} style={{display: "flex", flexDirection: "column", rowGap: "16px"}}>
-                        <Typography sx={{ color: "#FB0000", fontSize: "14px", color: "#808080"}}>Sign Up</Typography>
+                        <Typography sx={{ fontSize: "14px", color: "#808080"}}>Sign Up</Typography>
                         <TextField label="Name" value={first_name} onChange={(event) => {setFirstName(event.target.value)}}/>
                         <TextField label="Email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
                         <Button type="submit" >Enter</Button>
@@ -198,15 +198,15 @@ const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
             default:
                 return { width: '250px', content: (
                     <List>
-                        <ListItem button onClick={() => handleListItemClick('account')}>
-                            <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+                        <ListItem style={{backgroundColor: "#FB0000", color: "whitesmoke"}} onClick={() => handleListItemClick('account')}>
+                            <ListItemIcon><AccountCircleIcon style={{color: "whitesmoke"}}/></ListItemIcon>
                             <ListItemText primary="Join Waitlist" />
                         </ListItem>
-                        <ListItem button onClick={() => handleListItemClick('Preferences')}>
+                        <ListItem onClick={() => handleListItemClick('Preferences')}>
                             <ListItemIcon><MenuBookIcon /></ListItemIcon>
                             <ListItemText primary="Preferences" />
                         </ListItem>
-                        <ListItem button onClick={() => handleListItemClick('list')}>
+                        <ListItem onClick={() => handleListItemClick('list')}>
                             <ListItemIcon><Badge badgeContent={count} color="primary"><ListIcon /></Badge></ListItemIcon>
                             <ListItemText primary="Saved" />
                         </ListItem>
