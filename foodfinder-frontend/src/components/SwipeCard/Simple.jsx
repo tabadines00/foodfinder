@@ -112,8 +112,8 @@ function Simple (props) {
                   const response = await axios.get(
                       backendUrl + `locallist?latitude=${coords[0]}&longitude=${coords[1]}${terms}`
                   );
-                  setData(response.data.reverse()); // Update the component's state with the fetched data
-                  console.log("success"+backendUrl);
+                  setData(response.data.reverse()) // Update the component's state with the fetched data
+                  console.log("success"+backendUrl)
                   response.data.map((el) => console.log(el.name))
                 } /////////////////////////////////////////////////////////////////////////
                 else {
@@ -126,7 +126,7 @@ function Simple (props) {
                 console.error('Error fetching data:', error);
             }
         };
-        if(coords[0] && data.length == 0) {
+        if(coords[0] /* && data.length == 0 */) {
             fetchData()
         }
     }, [coords, preferences]);
