@@ -128,7 +128,7 @@ function Simple (props) {
         if(coords[0] && data.length == 0) {
             fetchData()
         }
-    }, [coords]);
+    }, [coords, preferences]);
 
 
   const swiped = (direction, nameToDelete, business, info) => {
