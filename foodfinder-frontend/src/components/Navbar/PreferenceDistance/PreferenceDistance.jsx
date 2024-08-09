@@ -10,7 +10,12 @@ const PreferenceDistance = (props) => {
     const handleSwitch = (pref) => {
         let newPreferences = preferences
         newPreferences[pref] = !preferences[pref]
-        setPreferences(newPreferences); 
+        console.log(pref + " was set to " + newPreferences[pref])
+        setPreferences({
+            coffee: newPreferences.coffee,
+            vegan: newPreferences.vegan,
+            halal: newPreferences.halal
+        })
     }
 
     return (
@@ -23,7 +28,7 @@ const PreferenceDistance = (props) => {
                          color: "#605656"
                          }}>
                 <Typography sx={{fontSize: "16px"}}>Coffee Only</Typography>
-                <Switch onClick={handleSwitch("coffee")} checked={preferences.coffee} sx={{marginTop: "1px"}} ></Switch>
+                <Switch onClick={() => {handleSwitch("coffee")}} value={preferences.coffee} checked={preferences.coffee} inputProps={{'aria-label': 'controlled'}} sx={{marginTop: "1px"}} ></Switch>
             </div>
             <div style={{display: "flex", 
                          padding: "24px 10px 12px 10px", 
@@ -33,7 +38,7 @@ const PreferenceDistance = (props) => {
                          color: "#605656"
                          }}>
                 <Typography sx={{fontSize: "16px"}}>Vegan</Typography>
-                <Switch onClick={handleSwitch("vegan")} checked={preferences.vegan} sx={{marginTop: "1px"}} ></Switch>
+                <Switch onClick={() => {handleSwitch("vegan")}} value={preferences.vegan} checked={preferences.vegan} inputProps={{'aria-label': 'controlled'}} sx={{marginTop: "1px"}} ></Switch>
             </div>
             <div style={{display: "flex", 
                          padding: "24px 10px 12px 10px", 
@@ -43,7 +48,7 @@ const PreferenceDistance = (props) => {
                          color: "#605656"
                          }}>
                 <Typography sx={{fontSize: "16px"}}>Halal</Typography>
-                <Switch onClick={handleSwitch("halal")} checked={preferences.halal} sx={{marginTop: "1px"}} ></Switch>
+                <Switch onClick={() => {handleSwitch("halal")}} value={preferences.halal} checked={preferences.halal} inputProps={{'aria-label': 'controlled'}} sx={{marginTop: "1px"}} ></Switch>
             </div>
             {/* switched && 
             <div style={{display: "flex",  paddingLeft: "40px", paddingBottom: "24px", }} >

@@ -93,6 +93,7 @@ function Simple (props) {
     useEffect(() => {
         // Fetch data when the component mounts
         console.log("mount!")
+        console.log(preferences)
         console.log(data)
         const fetchData = async () => {
             console.log("trying to fetch...")
