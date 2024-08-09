@@ -44,7 +44,7 @@ function Simple (props) {
     const [yesChoice, setYesChoice] = useState([])
     const [render, setRender] = useState(true); 
 
-    const { setMenuOpen } = props
+    const { setMenuOpen, preferences } = props
 
     let dev = false ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -98,8 +98,18 @@ function Simple (props) {
             console.log("trying to fetch...")
             try {
                 if (!dev) { ////////////////////////////////////////////////////////////
+                  let terms = ""
+                  if (preferences.coffee) {
+                    terms += "&coffee=true"
+                  }
+                  if (preferences.vegan) {
+                    terms += "&vegan=true"
+                  }
+                  if (preferences.halal) {
+                    terms += "&halal=true"
+                  }
                   const response = await axios.get(
-                      backendUrl + `locallist?latitude=${coords[0]}&longitude=${coords[1]}`
+                      backendUrl + `locallist?latitude=${coords[0]}&longitude=${coords[1]}${terms}`
                   );
                   setData(response.data.reverse()); // Update the component's state with the fetched data
                   console.log("success"+backendUrl);

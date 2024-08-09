@@ -45,7 +45,7 @@ api.post('/signup', async (c) => {
 })
 
 api.get("/signup", (c) => {
-    return c.json({ message: "You are on the latest version, 7/26"})
+    return c.json({ message: "You are on the latest version, 8/9"})
 })
 
 api.post('/login', async (c) => {
@@ -64,8 +64,13 @@ api.post('/login', async (c) => {
 
 api.get('/locallist', async (c) => {
     const yelpApiKey = c.env.YELP_API_KEY
-    const { latitude, longitude } = c.req.query()
-    const locallist = await model.fetchYelpData(latitude, longitude, yelpApiKey)
+    const { latitude, longitude, coffee, vegan, halal } = c.req.query()
+    let modifiers = {
+        coffee: coffee ? true : false,
+        vegan: vegan ? true : false,
+        halal: halal ? true : false
+    }
+    const locallist = await model.fetchYelpData(latitude, longitude, yelpApiKey, modifiers)
     return await c.json(locallist)
 })
 

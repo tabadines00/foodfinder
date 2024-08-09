@@ -27,7 +27,7 @@ import { login, signup } from "../../services/loginService"
 
 let backendUrl = import.meta.env.VITE_BACKEND_URL_PROD
 
-const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
+const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen, preferences, setPreferences}) => {
     const {count} = useMyContext();
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [first_name, setFirstName] = useState('')
@@ -175,7 +175,7 @@ const Navbar = ({containerHeight, heightOffset, menuOpen, setMenuOpen}) => {
                 <Typography variant="h6" style={{margin: '10px 0 10px 0', fontFamily:'Philosopher, sans-serif'}}>Preferences</Typography> 
                 </div>
                 <div style={{flexGrow: 1, backgroundColor: "#ececec",}}>
-                    <PreferenceDistance />
+                    <PreferenceDistance preferences={preferences} setPreferences={setPreferences} />
                 </div>
                 </div> };
              case 'list':

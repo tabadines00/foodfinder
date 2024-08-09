@@ -4,11 +4,15 @@ import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch'; 
 
 
-const PreferenceDistance = () => {
-    const [switched, setSwitched] = useState(false)
-    const handleSwitch = () => {
-        setSwitched(!switched); 
-}
+const PreferenceDistance = (props) => {
+    const { preferences, setPreferences } = props
+
+    const handleSwitch = (pref) => {
+        let newPreferences = preferences
+        newPreferences[pref] = !preferences[pref]
+        setPreferences(newPreferences); 
+    }
+
     return (
         <div style={{display: "flex", flexDirection: "column",borderRadius: "11px", backgroundColor: "white", marginTop: '16px'}}>
             <div style={{display: "flex", 
@@ -18,10 +22,30 @@ const PreferenceDistance = () => {
                          alignItems: "center", 
                          color: "#605656"
                          }}>
-                <Typography sx={{fontSize: "16px"}}>Distance</Typography>
-                <Switch onClick={handleSwitch} sx={{marginTop: "1px"}} ></Switch>
+                <Typography sx={{fontSize: "16px"}}>Coffee Only</Typography>
+                <Switch onClick={handleSwitch("coffee")} sx={{marginTop: "1px"}} ></Switch>
             </div>
-            { switched && 
+            <div style={{display: "flex", 
+                         padding: "24px 10px 12px 10px", 
+                         flexDirection: "row", 
+                         justifyContent: "space-between",
+                         alignItems: "center", 
+                         color: "#605656"
+                         }}>
+                <Typography sx={{fontSize: "16px"}}>Vegan</Typography>
+                <Switch onClick={handleSwitch("vegan")} sx={{marginTop: "1px"}} ></Switch>
+            </div>
+            <div style={{display: "flex", 
+                         padding: "24px 10px 12px 10px", 
+                         flexDirection: "row", 
+                         justifyContent: "space-between",
+                         alignItems: "center", 
+                         color: "#605656"
+                         }}>
+                <Typography sx={{fontSize: "16px"}}>Halal</Typography>
+                <Switch onClick={handleSwitch("halal")} sx={{marginTop: "1px"}} ></Switch>
+            </div>
+            {/* switched && 
             <div style={{display: "flex",  paddingLeft: "40px", paddingBottom: "24px", }} >
             <Slider size="large"
                 defaultValue={20}
@@ -31,7 +55,7 @@ const PreferenceDistance = () => {
                 sx={{width: "50%"}}/>
                         
             </div>
-            }
+            */}
         </div>
     )
 }

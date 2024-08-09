@@ -20,7 +20,13 @@ interface ApiResponse {
   businesses: Business[];
 }
 
-export const fetchYelpData = async (latitude: string, longitude: string, yelpApiKey: string): Promise<any> => {
+interface Modifier {
+  coffee: boolean,
+  vegan: boolean,
+  halal: boolean
+}
+
+export const fetchYelpData = async (latitude: string, longitude: string, yelpApiKey: string, modifier?: Modifier): Promise<any> => {
   const options = {
       method: 'GET',
       headers: {
@@ -33,7 +39,19 @@ export const fetchYelpData = async (latitude: string, longitude: string, yelpApi
         let simplifiedList: any[] = []
       try {
           console.log(yelpApiKey)
-          let res = await fetch(`https://api.yelp.com/v3/businesses/search?open_now=true&sort_by=distance&latitude=${latitude}&longitude=${longitude}&term=food&categories=restaurants&limit=50`, options);
+
+          let terms = "term=food&categories=restaurants"
+
+          if (modifier?.coffee) {
+            terms = "term=coffee&categories=food"
+          }
+          if (modifier?.vegan) {
+            terms = "term=vegan&categories=vegan,restaurants"
+          }
+          if (modifier?.halal) {
+            terms = "term=halal&categories=halal,restaurants"
+          }
+          let res = await fetch(`https://api.yelp.com/v3/businesses/search?open_now=true&sort_by=distance&latitude=${latitude}&longitude=${longitude}&${terms}&limit=50`, options);
           let data: ApiResponse = await res.json();
             console.log(data)
             console.log("latitude = " + latitude + " longitude = " + longitude)

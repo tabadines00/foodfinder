@@ -23,6 +23,13 @@ const UiPage = () => {
     const [heightOffset, setHeightOffset] = useState(0);
 
     const [menuOpen, setMenuOpen] = useState(false);
+    const [preferences, setPreferences] = useState(
+        {
+            coffee: false,
+            vegan: false,
+            halal: false
+        }
+    )
 
     useEffect(() => {
         // Function to update the height
@@ -68,8 +75,8 @@ const UiPage = () => {
     <MyProvider> 
    <div  style={{ width: "100%", maxWidth: "450px", display: "flex", justifyContent: "center",  alignItems: "center",}}> 
      <div  ref={containerRef} style={{ maxWidth: "450px", width: '100%', height: "100%", maxHeight: "900px", overflowX: "hidden",}} className="ui-page-parent"> 
-        <Navbar containerHeight={containerHeight} heightOffset={heightOffset} menuOpen={menuOpen} setMenuOpen={setMenuOpen} className="navbar"/>
-        <Simple setMenuOpen={setMenuOpen} />
+        <Navbar containerHeight={containerHeight} heightOffset={heightOffset} menuOpen={menuOpen} setMenuOpen={setMenuOpen} preferences={preferences} setPreferences={setPreferences} className="navbar"/>
+        <Simple setMenuOpen={setMenuOpen} preferences={preferences} />
         
       </div>
    </div>
