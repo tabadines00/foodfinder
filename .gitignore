@@ -1,5 +1,8 @@
 un
 
+.replit
+replit.nix
+
 # Logs
 logs
 *.log

@@ -23,7 +23,30 @@ interface ApiResponse {
 interface Modifier {
   coffee: boolean,
   vegan: boolean,
-  halal: boolean
+  halal: boolean,
+  search: string
+}
+
+function modifierFactory(modifier?: Modifier): string {
+  let terms = "term=food"
+  let categories = "categories=restaurants"
+
+  if (modifier?.coffee) {
+    terms = "term=coffee"
+    categories = "categories=food"
+  }
+  if (modifier?.vegan) {
+    terms = "term=vegan"
+    categories += ",vegan"
+  }
+  if (modifier?.halal) {
+    terms = "term=halal"
+    categories += ",halal"
+  }
+  if(modifier?.search) {
+    terms = "term=" + modifier.search
+  }
+  return terms + "&" + categories
 }
 
 export const fetchYelpData = async (latitude: string, longitude: string, yelpApiKey: string, modifier?: Modifier): Promise<any> => {
@@ -40,17 +63,8 @@ export const fetchYelpData = async (latitude: string, longitude: string, yelpApi
       try {
           console.log(yelpApiKey)
 
-          let terms = "term=food&categories=restaurants"
-
-          if (modifier?.coffee) {
-            terms = "term=coffee&categories=food"
-          }
-          if (modifier?.vegan) {
-            terms = "term=vegan&categories=vegan,restaurants"
-          }
-          if (modifier?.halal) {
-            terms = "term=halal&categories=halal,restaurants"
-          }
+          let terms = modifierFactory(modifier)
+          
           let res = await fetch(`https://api.yelp.com/v3/businesses/search?open_now=true&sort_by=distance&latitude=${latitude}&longitude=${longitude}&${terms}&limit=50`, options);
           let data: ApiResponse = await res.json();
             console.log(data)

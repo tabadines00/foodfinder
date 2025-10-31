@@ -64,11 +64,12 @@ api.post('/login', async (c) => {
 
 api.get('/locallist', async (c) => {
     const yelpApiKey = c.env.YELP_API_KEY
-    const { latitude, longitude, coffee, vegan, halal } = c.req.query()
+    const { latitude, longitude, coffee, vegan, halal, search } = c.req.query()
     let modifiers = {
         coffee: coffee ? true : false,
         vegan: vegan ? true : false,
-        halal: halal ? true : false
+        halal: halal ? true : false,
+        search: search ? search : ""
     }
     const locallist = await model.fetchYelpData(latitude, longitude, yelpApiKey, modifiers)
     return await c.json(locallist)
